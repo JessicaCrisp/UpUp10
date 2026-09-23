@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>You're a Founding Member — UpUp10</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a;
+      --green: #00ff88;
+      --grad: linear-gradient(135deg, #00ff88 0%, #00ffcc 50%, #00ff88 100%);
+      --w60: rgba(255,255,255,0.60);
+      --w35: rgba(255,255,255,0.35);
+      --w10: rgba(255,255,255,0.08);
+    }
+    body {
+      background: var(--black);
+      color: white;
+      font-family: 'Inter', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .logo { height: 60px; width: auto; margin-bottom: 40px; }
+    .badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; color: var(--green); text-transform: uppercase;
+      border: 1px solid rgba(0,255,136,0.3);
+      border-radius: 20px; padding: 6px 18px; margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900; line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .green { 
+      background: var(--grad); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .sub {
+      font-size: 18px; color: var(--w60);
+      line-height: 1.7; max-width: 520px;
+      margin: 0 auto 48px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--green); color: #000;
+      border-radius: 12px; font-size: 20px; font-weight: 900;
+      padding: 20px 56px; text-decoration: none;
+      transition: opacity .15s, transform .1s;
+      box-shadow: 0 0 40px rgba(0,255,136,0.35);
+      margin-bottom: 16px;
+    }
+    .btn:hover { opacity: .88; transform: translateY(-2px); }
+    .btn-note {
+      font-size: 13px; color: var(--w35);
+      margin-bottom: 64px;
+    }
+    .divider { height: 1px; background: var(--w10); width: 100%; max-width: 560px; margin: 0 auto 48px; }
+    .warning-box {
+      background: #111;
+      border: 1px solid var(--w10);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 560px;
+      text-align: left;
+      margin-bottom: 48px;
+    }
+    .warning-title {
+      font-size: 16px; font-weight: 800;
+      color: var(--green); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .warning-step {
+      font-size: 14px; color: var(--w60);
+      line-height: 1.7; padding: 8px 0;
+      border-bottom: 1px solid var(--w10);
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .warning-step:last-child { border-bottom: none; }
+    .step-num {
+      background: var(--green); color: #000;
+      font-size: 11px; font-weight: 900;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .feedback-box {
+      max-width: 560px;
+      text-align: center;
+    }
+    .feedback-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .feedback-box p { font-size: 15px; color: var(--w60); line-height: 1.7; }
+    .feedback-box a { color: var(--green); text-decoration: none; font-weight: 700; }
+    footer {
+      margin-top: 64px;
+      font-size: 13px; color: var(--w35);
+    }
+    footer a { color: var(--w35); text-decoration: none; }
+    footer a:hover { color: white; }
+  </style>
+</head>
+<body>
+
+  <img src="logo.png" alt="UpUp10" class="logo">
+
+  <div class="badge">🎉 Founding Member</div>
+
+  <h1>You're one of our<br><span class="green">first 100.</span></h1>
+
+  <p class="sub">Thank you for being here at the start. Download UpUp10 below — your body is about to thank you.</p>
+
+  <a href="https://drive.google.com/uc?export=download&id=1xnnZ5vAT6UAz4fZqNtlH8OZjPiyHKnlh" class="btn">⬇ Download UpUp10</a>
+  <p class="btn-note">Mac only · Apple Silicon (M1, M2, M3, M4)</p>
+
+  <div class="divider"></div>
+
+  <div class="warning-box">
+    <div class="warning-title">⚠️ Important — read before you install</div>
+    <div class="warning-step">
+      <div class="step-num">1</div>
+      <div>Open the DMG file you just downloaded and drag <strong>UpUp10</strong> into your Applications folder.</div>
+    </div>
+    <div class="warning-step">
+      <div class="step-num">2</div>
+      <div>When you open it, Mac will show a security warning. This is normal — the app is signed but not yet fully verified by Apple.</div>
+    </div>
+    <div class="warning-step">
+      <div class="step-num">3</div>
+      <div><strong>Right-click</strong> the UpUp10 app → click <strong>Open</strong> → click <strong>Open</strong> again in the popup. You only need to do this once.</div>
+    </div>
+    <div class="warning-step">
+      <div class="step-num">4</div>
+      <div>You'll see <strong>"up"</strong> appear in your menu bar at the top of your screen. That means it's running. Click it to set your level and frequency.</div>
+    </div>
+    <div class="warning-step">
+      <div class="step-num">5</div>
+      <div>Your first exercise break will fire at your chosen interval. <strong>10 seconds. Then it's gone.</strong></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="feedback-box">
+    <h3>Your feedback matters.</h3>
+    <p>You're helping shape UpUp10 before it launches publicly. If something doesn't work, feels off, or you have an idea — please text or message Jess directly. Every piece of feedback makes this better for everyone.</p>
+  </div>
+
+  <footer style="margin-top:48px;">
+    <a href="index.html">← Back to upup10.com</a>
+  </footer>
+
+</body>
+</html>
