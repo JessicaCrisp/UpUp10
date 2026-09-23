@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>How It Works — UpUp10</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a;
+      --green: #00ff88;
+      --grad: linear-gradient(135deg, #00ff88 0%, #00ffcc 50%, #00ff88 100%);
+      --w90: rgba(255,255,255,0.90);
+      --w60: rgba(255,255,255,0.60);
+      --w35: rgba(255,255,255,0.35);
+      --w10: rgba(255,255,255,0.08);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: white;
+      font-family: 'Inter', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(10,10,10,0.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--w10);
+    }
+    .nav-cta {
+      background: var(--green); color: #000;
+      border-radius: 8px; font-size: 14px; font-weight: 800;
+      padding: 10px 22px; cursor: pointer;
+      font-family: inherit; text-decoration: none;
+      transition: opacity .15s;
+      box-shadow: 0 0 20px rgba(0,255,136,0.3);
+    }
+    .nav-cta:hover { opacity: .85; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-link { color: var(--w60); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .15s; }
+    .nav-link:hover, .nav-link.active { color: white; }
+
+    /* HERO */
+    .page-hero {
+      padding: 140px 24px 80px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .page-label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; color: var(--green); text-transform: uppercase;
+      border: 1px solid rgba(0,255,136,0.3);
+      border-radius: 20px; padding: 6px 18px; margin-bottom: 24px;
+    }
+    .page-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .green-text {
+      background: var(--grad); -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-sub {
+      font-size: clamp(16px, 1.8vw, 20px);
+      color: var(--w60); line-height: 1.7;
+    }
+
+    /* SECTIONS */
+    .section { max-width: 960px; margin: 0 auto; padding: 80px 24px; }
+    .sec-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--green); text-transform: uppercase; margin-bottom: 14px; }
+    .sec-head { font-size: clamp(28px, 4vw, 44px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+    .sec-sub { font-size: 17px; color: var(--w60); line-height: 1.7; margin-bottom: 48px; max-width: 600px; }
+    .divider { height: 1px; background: var(--w10); max-width: 960px; margin: 0 auto; }
+
+    /* MENU BAR STEPS */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .step-card {
+      background: #111;
+      border: 1px solid var(--w10);
+      border-radius: 16px;
+      padding: 32px 24px;
+    }
+    .step-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--green); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .step-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+    .step-body { font-size: 15px; color: var(--w60); line-height: 1.6; }
+
+    /* MENU SCREENSHOT */
+    .menu-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .menu-visual {
+      background: #111;
+      border: 1px solid var(--w10);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .menu-bar-mock {
+      background: rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 8px 0;
+      font-size: 15px;
+      color: white;
+      width: 220px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .menu-item {
+      padding: 7px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--w90);
+      cursor: default;
+    }
+    .menu-item.header { color: var(--w35); font-size: 13px; }
+    .menu-item.active { background: var(--green); color: #000; border-radius: 6px; margin: 0 4px; }
+    .menu-item.active .menu-arrow { color: #000; }
+    .menu-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 4px 0; }
+    .menu-arrow { color: var(--w35); font-size: 12px; }
+    .menu-sub {
+      background: rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 8px 0;
+      font-size: 14px;
+      margin-top: 8px;
+      width: 200px;
+    }
+    .menu-sub-header { padding: 6px 16px; color: var(--w35); font-size: 12px; }
+    .menu-sub-item { padding: 6px 16px; color: var(--w90); display: flex; align-items: center; gap: 8px; }
+    .menu-sub-item .check { color: var(--green); font-size: 12px; }
+    .menu-label {
+      display: inline-block;
+      background: rgba(0,255,136,0.1);
+      color: var(--green);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .menu-explain { margin-bottom: 32px; }
+    .menu-explain h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .menu-explain p { font-size: 15px; color: var(--w60); line-height: 1.6; }
+
+    @media (max-width: 768px) {
+      .menu-showcase { grid-template-columns: 1fr; }
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+    }
+
+    /* EXERCISE LEVELS */
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .level-card {
+      background: #111;
+      border: 1px solid var(--w10);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .level-header {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--w10);
+    }
+    .level-tag {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .level-tag.gentle { background: rgba(0,255,136,0.1); color: var(--green); }
+    .level-tag.active { background: rgba(0,200,255,0.1); color: #00ccff; }
+    .level-tag.strong { background: rgba(255,100,0,0.1); color: #ff6400; }
+    .level-name { font-size: 24px; font-weight: 900; margin-bottom: 6px; }
+    .level-desc { font-size: 14px; color: var(--w60); line-height: 1.5; }
+    .level-exercises { padding: 20px 24px; }
+    .exercise-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--w10);
+    }
+    .exercise-item:last-child { border-bottom: none; }
+    .exercise-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: white; }
+    .exercise-instruction { font-size: 13px; color: var(--w35); line-height: 1.5; }
+
+    @media (max-width: 900px) {
+      .levels-grid { grid-template-columns: 1fr; }
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 80px 24px;
+      background: #060f0a;
+    }
+    .cta-section h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 900; margin-bottom: 16px; }
+    .cta-section p { font-size: 18px; color: var(--w60); margin-bottom: 40px; }
+    .btn {
+      display: inline-block;
+      background: var(--green); color: #000;
+      border-radius: 10px; font-size: 18px; font-weight: 900;
+      padding: 18px 52px; text-decoration: none;
+      transition: opacity .15s, transform .1s;
+      box-shadow: 0 0 32px rgba(0,255,136,0.3);
+    }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-note { font-size: 13px; color: var(--w35); margin-top: 10px; }
+    .btn-note strong { color: var(--green); }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 40px 24px;
+      font-size: 13px; color: var(--w35);
+      border-top: 1px solid var(--w10);
+    }
+    footer a { color: var(--w35); text-decoration: none; }
+    footer a:hover { color: white; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" style="display:flex;align-items:center;"><img src="logo.png" alt="UpUp10" style="height:38px;width:auto;"></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="how-it-works.html" class="nav-link active">How it works</a>
+    </div>
+    <a href="index.html#buy" class="nav-cta">$15 · One payment. Forever.</a>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-label">How it works</div>
+    <h1 class="page-title">Simple. <span class="green-text">Automatic.</span> Out of your way.</h1>
+    <p class="page-sub">UpUp10 lives quietly in your menu bar and does its job without you thinking about it. Here's everything you need to know.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MENU BAR -->
+  <div class="section">
+    <div class="sec-label">The menu bar</div>
+    <h2 class="sec-head">Everything is one click away.</h2>
+    <p class="sec-sub">Once UpUp10 is running, you'll see the <strong>"up"</strong> icon in your Mac menu bar at the top of your screen. Click it any time to control everything.</p>
+
+    <div class="menu-showcase">
+      <div class="menu-visual">
+        <div style="margin-bottom:24px;">
+          <div style="font-size:12px;color:var(--w35);margin-bottom:12px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Main menu</div>
+          <div class="menu-bar-mock">
+            <div class="menu-item header">UpUp10 is running</div>
+            <div class="menu-divider"></div>
+            <div class="menu-item">Move now</div>
+            <div class="menu-divider"></div>
+            <div class="menu-item">In a Meeting <span class="menu-arrow">›</span></div>
+            <div class="menu-item">Settings <span class="menu-arrow">›</span></div>
+            <div class="menu-divider"></div>
+            <div class="menu-item">Quit UpUp10</div>
+          </div>
+        </div>
+        <div style="margin-bottom:24px;">
+          <div style="font-size:12px;color:var(--w35);margin-bottom:12px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Settings submenu</div>
+          <div class="menu-sub">
+            <div class="menu-sub-header">Level</div>
+            <div class="menu-sub-item">Gentle</div>
+            <div class="menu-sub-item"><span class="check">✓</span> Active</div>
+            <div class="menu-sub-item">Strong</div>
+            <div class="menu-divider"></div>
+            <div class="menu-sub-header">Frequency</div>
+            <div class="menu-sub-item"><span class="check">✓</span> 30 min</div>
+            <div class="menu-sub-item">45 min</div>
+            <div class="menu-sub-item">60 min</div>
+            <div class="menu-divider"></div>
+            <div class="menu-sub-item">Change setup</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="menu-explain">
+          <div class="menu-label">Move now</div>
+          <h3>Trigger a break instantly</h3>
+          <p>Don't want to wait? Click Move now and UpUp10 fires an exercise break immediately. Great for when you've been sitting too long and know it.</p>
+        </div>
+        <div class="menu-explain">
+          <div class="menu-label">In a Meeting</div>
+          <h3>On a call? No interruptions.</h3>
+          <p>Pause breaks for 30, 60 or 90 minutes — or until you turn it back on. UpUp10 won't interrupt your screen while you're presenting or on a video call.</p>
+        </div>
+        <div class="menu-explain">
+          <div class="menu-label">Settings</div>
+          <h3>Change your level and frequency</h3>
+          <p>Choose between <strong>Gentle, Active or Strong</strong> exercises. Set your break frequency to every <strong>30, 45 or 60 minutes</strong>. Change it any time — it takes two clicks.</p>
+        </div>
+        <div class="menu-explain">
+          <div class="menu-label">Quit UpUp10</div>
+          <h3>Stop when you need to</h3>
+          <p>Click Quit to stop UpUp10 completely. Relaunch it from your Applications folder whenever you're ready.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- EXERCISE LEVELS -->
+  <div class="section">
+    <div class="sec-label">The exercises</div>
+    <h2 class="sec-head">30 exercises. 3 levels.<br>A different one every time.</h2>
+    <p class="sec-sub">You choose your level when you set up — and you can change it any time in Settings. Every break shows a different exercise so your body never gets bored.</p>
+
+    <div class="levels-grid">
+
+      <!-- GENTLE -->
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-tag gentle">Gentle</div>
+          <div class="level-name">Gentle</div>
+          <div class="level-desc">Seated stretches and slow movements. Perfect if you want to stay in your chair or are just getting started.</div>
+        </div>
+        <div class="level-exercises">
+          <div class="exercise-item">
+            <div class="exercise-name">Neck Side Stretch</div>
+            <div class="exercise-instruction">Let your ear fall toward your shoulder — hold and feel the stretch — switch sides.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Shoulder Rolls</div>
+            <div class="exercise-instruction">Roll both shoulders backward in big slow circles.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Chin Tuck</div>
+            <div class="exercise-instruction">Pull your chin straight back — hold 3 seconds — release and repeat.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Seated Torso Rotation</div>
+            <div class="exercise-instruction">Sit tall — turn and look behind you as far as you can — left and right.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Shoulder Blade Squeeze</div>
+            <div class="exercise-instruction">Squeeze your shoulder blades together — hold 3 seconds — release.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Seated Figure-4 Stretch</div>
+            <div class="exercise-instruction">Cross your ankle over your knee — lean forward slightly — feel it in your hip.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Wrist Circles</div>
+            <div class="exercise-instruction">Arms out, make fists — draw big slow circles with your wrists both ways.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Seated Cat-Cow</div>
+            <div class="exercise-instruction">Arch your back — then round it — breathe and keep flowing.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Chest Opener</div>
+            <div class="exercise-instruction">Clasp hands behind your back — squeeze shoulder blades and lift — hold 5 seconds.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Ankle Circles</div>
+            <div class="exercise-instruction">Lift both feet — draw big circles with your toes — both directions.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE -->
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-tag active">Active</div>
+          <div class="level-name">Active</div>
+          <div class="level-desc">Standing movements that get your blood flowing. A step up from gentle — you'll feel this one.</div>
+        </div>
+        <div class="level-exercises">
+          <div class="exercise-item">
+            <div class="exercise-name">Calf Raises</div>
+            <div class="exercise-instruction">Rise onto your tiptoes as high as you can — pause — lower slowly.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Shoulder Rolls</div>
+            <div class="exercise-instruction">Stand tall — roll both shoulders backward in big circles.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Sit-to-Stand</div>
+            <div class="exercise-instruction">Lean forward, drive through your heels — stand up, lower back down — no hands.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Chin Tuck</div>
+            <div class="exercise-instruction">Stand tall — pull chin straight back — hold 3 seconds — repeat.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Torso Rotation</div>
+            <div class="exercise-instruction">Hands on hips — rotate and look behind you as far as you can — both sides.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Hip Circles</div>
+            <div class="exercise-instruction">Feet wide — draw big slow circles with your hips like a hula hoop — both ways.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Overhead Reach</div>
+            <div class="exercise-instruction">Reach one arm as high as possible — feel your whole side lengthen — switch arms.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Chest Opener</div>
+            <div class="exercise-instruction">Open arms wide — squeeze shoulder blades — hold 3 seconds — repeat.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Standing Figure-4</div>
+            <div class="exercise-instruction">Stand on one leg — cross ankle over knee — bend and sit back — feel it in your hip.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Neck Side Stretch</div>
+            <div class="exercise-instruction">Standing — let ear drop toward shoulder — gently add pressure — switch sides.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRONG -->
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-tag strong">Strong</div>
+          <div class="level-name">Strong</div>
+          <div class="level-desc">Standing exercises with more intensity. You'll be breathing harder. Your body will thank you more.</div>
+        </div>
+        <div class="level-exercises">
+          <div class="exercise-item">
+            <div class="exercise-name">Calf Raises</div>
+            <div class="exercise-instruction">Rise onto tiptoes — pause hard at the top — lower as slowly as possible.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Hip Circles</div>
+            <div class="exercise-instruction">Feet wide apart — draw the biggest slowest circles you can with your hips.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Sit-to-Stand</div>
+            <div class="exercise-instruction">Explode up through your heels — lower back slowly — keep going without stopping.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Wall Push Up</div>
+            <div class="exercise-instruction">Hands on wall at shoulder height — lower your chest to the wall — push back hard.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Standing Knee Lift</div>
+            <div class="exercise-instruction">Drive each knee up toward your chest — alternate legs — keep the pace up.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Reverse Lunge</div>
+            <div class="exercise-instruction">Step back — lower your knee toward the floor — drive back up — switch legs.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Overhead Reach</div>
+            <div class="exercise-instruction">Both arms locked straight overhead — hold and breathe — feel your spine lengthen.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Squat</div>
+            <div class="exercise-instruction">Feet shoulder width — sit back, chest up — thighs parallel — drive back up.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Side Leg Raise</div>
+            <div class="exercise-instruction">Hold your desk — lift your leg out to the side — squeeze at the top — lower slowly.</div>
+          </div>
+          <div class="exercise-item">
+            <div class="exercise-name">Standing Side Stretch</div>
+            <div class="exercise-instruction">Raise one arm — lean your whole body to the opposite side — hold 4 seconds.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Ready to feel the difference?</h2>
+    <p>10 seconds an hour. Your body will thank you.</p>
+    <a href="index.html#buy" class="btn">Download Now — $15 · One payment. Forever.</a>
+    <p class="btn-note"><strong>30 day money back guarantee.</strong> No questions asked.</p>
+  </div>
+
+  <footer>
+    <div style="margin-bottom:8px;"><img src="logo.png" alt="UpUp10" style="height:28px;width:auto;opacity:0.5;"></div>
+    © 2026 UpUp10. Made in Sydney. &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="how-it-works.html">How it works</a>
+  </footer>
+
+</body>
+</html>
