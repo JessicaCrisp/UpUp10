@@ -71,7 +71,22 @@
       margin: 0 auto;
     }
     .hero-left { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
-    .hero-right { display: flex; align-items: center; justify-content: center; }
+    .hero-right { 
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(ellipse, rgba(0,255,136,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .laptop-wrap { position: relative; z-index: 1; }
     .hero-badge {
       display: inline-block; font-size: 11px; font-weight: 700;
       letter-spacing: 2px; color: var(--green); text-transform: uppercase;
@@ -288,7 +303,7 @@
       <div class="hero-left">
         <div class="hero-badge">Mac Desktop App · 30 Day Money Back Guarantee</div>
         <h1 class="hero-headline">
-          Slow down the body decline<br>your <span class="green-text">desk is causing.</span>
+          Slow down <span style="text-transform:uppercase;font-weight:900;">Your</span> <span class="green-text" style="text-transform:uppercase;">Body Decline</span><br>your desk is causing.
         </h1>
         <p class="hero-sub">Your desk is stealing years from you.</p>
         <p class="hero-desc">UpUp10 gives you a 10-second exercise break every hour — easy, fun, automatic. Your body will thank you.</p>
@@ -345,7 +360,7 @@
         <p class="story-body">
           "I put on weight. My fitness dropped. After three months at a desk I was getting really soft and stiff. <strong>This was shocking to me — I have competed at the Olympics and won World Championships.</strong> So I thought there has to be a better way.<br><br>
           I needed a simple fix — something that would not take away from my focus on work. That's when I came up with UpUp10.<br><br>
-          The truth is I made it for myself. I am 57 and spending my days in front of a computer screen. In the two weeks I have been using it I can already see a body and mind improvement — and that's why I want to get this to as many people as possible who spend their days on a computer.<br><br>
+          The truth is I made it for myself. I am 57 and spending my days in front of a computer screen. In the time I have been using it I can already see a body and mind improvement — and that's why I want to get this to as many people as possible who spend their days on a computer.<br><br>
           <strong>We cannot let our bodies disintegrate around us while we work.</strong><br><br>
           Interrupt your computer. Move for 10 seconds. That's UpUp10."
         </p>
