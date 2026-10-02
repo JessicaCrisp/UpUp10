@@ -30,6 +30,20 @@
       overflow-x: hidden;
     }
 
+    /* ── OVERLAY ANIMATION ── */
+    #overlay {
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.32, 0, 0.67, 0);
+    }
+    #overlay.show {
+      transform: translateX(0);
+      transition: transform 0.35s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    #overlay.hiding {
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.32, 0, 0.67, 0);
+    }
+
     /* ── ONBOARDING ── */
     #onboarding {
       min-height: 100vh;
@@ -42,6 +56,31 @@
       position: relative;
       overflow: hidden;
     }
+    .ob-step-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: rgba(0,255,136,0.5); text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .ob-options {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 32px; max-width: 520px; width: 100%;
+      text-align: left;
+    }
+    .ob-option {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; padding: 18px 16px;
+      cursor: pointer; transition: all .15s;
+    }
+    .ob-option:hover { border-color: rgba(0,255,136,0.4); background: rgba(0,255,136,0.05); }
+    .ob-option.ob-selected { border-color: var(--green); background: rgba(0,255,136,0.08); }
+    .ob-opt-title { font-size: 15px; font-weight: 800; color: white; margin-bottom: 4px; }
+    .ob-opt-desc { font-size: 12px; color: var(--w35); line-height: 1.4; }
+    .ob-how { display: flex; flex-direction: column; gap: 16px; max-width: 480px; text-align: left; margin-bottom: 40px; }
+    .ob-how-item { display: flex; gap: 16px; align-items: flex-start; }
+    .ob-how-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+    .ob-how-title { font-size: 15px; font-weight: 800; color: white; margin-bottom: 4px; }
+    .ob-how-desc { font-size: 13px; color: var(--w60); line-height: 1.5; }
     #onboarding::before {
       content: '';
       position: absolute;
@@ -224,15 +263,16 @@
 
     /* ── OVERLAY ── */
     #overlay {
-      display: none;
+      display: flex;
       position: fixed; inset: 0; z-index: 999;
       background: linear-gradient(135deg, #050e05 0%, #080e08 50%, #1a2e1a 100%);
       align-items: center; justify-content: center;
       flex-direction: column;
       padding: 48px;
       overflow: hidden;
+      pointer-events: none;
     }
-    #overlay.show { display: flex; }
+    #overlay.show { pointer-events: all; }
 
     /* Overlay streaks */
     .ov-streak { position: absolute; width: 140%; height: 2px; background: rgba(150,255,200,0.25); left: -10%; }
@@ -298,18 +338,114 @@
 
 <!-- ONBOARDING -->
 <div id="onboarding">
-  <div class="ob-logo">UpUp10</div>
-  <div class="ob-sub">Stop your desk wrecking your body</div>
-  <h1 class="ob-title">A 10-second exercise break.<br>Every hour. Automatic.</h1>
-  <p class="ob-desc">UpUp10 interrupts your screen every 30–60 minutes with a quick movement break. 10 seconds. Then it's gone. Your body will thank you.</p>
-  <div class="ob-points">
-    <div class="ob-point">Improve circulation</div>
-    <div class="ob-point">Increase your energy</div>
-    <div class="ob-point">Reduce body pain</div>
-    <div class="ob-point">Works on any computer with a browser</div>
+  <!-- Step 1: Welcome -->
+  <div class="ob-step" id="step1">
+    <div class="ob-logo">UpUp10</div>
+    <div class="ob-sub">Stop your desk wrecking your body</div>
+    <h1 class="ob-title">10 seconds of movement.<br>Every 20–60 minutes. Automatic.</h1>
+    <p class="ob-desc">UpUp10 interrupts your screen with a quick exercise break. 10 seconds. Then it's gone. Your body will thank you.</p>
+    <div class="ob-points">
+      <div class="ob-point">Improve circulation</div>
+      <div class="ob-point">Increase your energy</div>
+      <div class="ob-point">Reduce body pain</div>
+      <div class="ob-point">Works on Mac, Windows or any work computer</div>
+    </div>
+    <button class="ob-btn" onclick="goStep(2)">Get Started →</button>
   </div>
-  <button class="ob-btn" onclick="startOnboarding()">Enable UpUp10 — It's Free</button>
-  <p class="ob-note">Your browser will ask permission to go fullscreen. Click Allow.</p>
+
+  <!-- Step 2: Focus -->
+  <div class="ob-step" id="step2" style="display:none;">
+    <div class="ob-logo">UpUp10</div>
+    <div class="ob-step-num">Step 1 of 3</div>
+    <h2 class="ob-title">What does your body<br>need today?</h2>
+    <p class="ob-desc">Choose your focus — you can change this any time in Settings.</p>
+    <div class="ob-options">
+      <div class="ob-option" id="ob-focus-fullbody" onclick="obSetFocus('fullbody')">
+        <div class="ob-opt-title">Full Body</div>
+        <div class="ob-opt-desc">General movement breaks for overall health</div>
+      </div>
+      <div class="ob-option" id="ob-focus-neck" onclick="obSetFocus('neck')">
+        <div class="ob-opt-title">Neck</div>
+        <div class="ob-opt-desc">Targeted stretches for screen-related neck tension</div>
+      </div>
+      <div class="ob-option" id="ob-focus-back" onclick="obSetFocus('back')">
+        <div class="ob-opt-title">Back</div>
+        <div class="ob-opt-desc">Exercises for lower back pain from sitting</div>
+      </div>
+      <div class="ob-option" id="ob-focus-energy" onclick="obSetFocus('energy')">
+        <div class="ob-opt-title">Energy</div>
+        <div class="ob-opt-desc">Higher intensity moves to beat the afternoon slump</div>
+      </div>
+    </div>
+    <button class="ob-btn" id="step2btn" onclick="goStep(3)" disabled style="opacity:0.4;">Next →</button>
+  </div>
+
+  <!-- Step 3: Frequency -->
+  <div class="ob-step" id="step3" style="display:none;">
+    <div class="ob-logo">UpUp10</div>
+    <div class="ob-step-num">Step 2 of 3</div>
+    <h2 class="ob-title">How often do you want<br>a break?</h2>
+    <p class="ob-desc">Research shows every 30 minutes is the sweet spot — but choose what works for you.</p>
+    <div class="ob-options">
+      <div class="ob-option" id="ob-freq-20" onclick="obSetFreq(20)">
+        <div class="ob-opt-title">Every 20 min</div>
+        <div class="ob-opt-desc">Maximum movement — great for intensive desk days</div>
+      </div>
+      <div class="ob-option ob-selected" id="ob-freq-30" onclick="obSetFreq(30)">
+        <div class="ob-opt-title">Every 30 min ✓</div>
+        <div class="ob-opt-desc">Research-backed sweet spot — recommended</div>
+      </div>
+      <div class="ob-option" id="ob-freq-45" onclick="obSetFreq(45)">
+        <div class="ob-opt-title">Every 45 min</div>
+        <div class="ob-opt-desc">Good balance for focused work sessions</div>
+      </div>
+      <div class="ob-option" id="ob-freq-60" onclick="obSetFreq(60)">
+        <div class="ob-opt-title">Every 60 min</div>
+        <div class="ob-opt-desc">One break per hour — minimal interruption</div>
+      </div>
+    </div>
+    <button class="ob-btn" onclick="goStep(4)">Next →</button>
+  </div>
+
+  <!-- Step 4: How to use -->
+  <div class="ob-step" id="step4" style="display:none;">
+    <div class="ob-logo">UpUp10</div>
+    <div class="ob-step-num">Step 3 of 3</div>
+    <h2 class="ob-title">You're almost ready.</h2>
+    <p class="ob-desc">Here's how to get the most out of UpUp10:</p>
+    <div class="ob-how">
+      <div class="ob-how-item">
+        <div class="ob-how-icon">⚙</div>
+        <div>
+          <div class="ob-how-title">Change settings any time</div>
+          <div class="ob-how-desc">Click the Settings button in the top right to change your focus, level, or frequency — or to pause for a meeting.</div>
+        </div>
+      </div>
+      <div class="ob-how-item">
+        <div class="ob-how-icon">⏸</div>
+        <div>
+          <div class="ob-how-title">In a meeting?</div>
+          <div class="ob-how-desc">Go to Settings → In a Meeting to pause breaks for 30 min, 1 hour, 2 hours, or until you're back.</div>
+        </div>
+      </div>
+      <div class="ob-how-item">
+        <div class="ob-how-icon">💚</div>
+        <div>
+          <div class="ob-how-title">Move Now</div>
+          <div class="ob-how-desc">Click Move Now any time to trigger an exercise break immediately — don't wait for the timer.</div>
+        </div>
+      </div>
+      <div class="ob-how-item">
+        <div class="ob-how-icon">🌐</div>
+        <div>
+          <div class="ob-how-title">Keep this tab open</div>
+          <div class="ob-how-desc">UpUp10 runs as long as this browser tab is open. Pin it to your browser bar for best results.</div>
+        </div>
+      </div>
+    </div>
+    <button class="ob-btn" onclick="startOnboarding()">Start UpUp10 →</button>
+    <p class="ob-note">Your browser will ask permission to go fullscreen. Click Allow for the best experience.</p>
+  </div>
 </div>
 
 <!-- MAIN APP -->
@@ -597,8 +733,43 @@ function startOverlayCountdown() {
 
 function closeOverlay() {
   if (overlayTimer) clearInterval(overlayTimer);
-  document.getElementById('overlay').classList.remove('show');
-  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  const overlay = document.getElementById('overlay');
+  overlay.classList.add('hiding');
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    overlay.classList.remove('hiding');
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  }, 350);
+}
+
+let obFocusSelected = false;
+
+function goStep(n) {
+  document.querySelectorAll('.ob-step').forEach(s => s.style.display = 'none');
+  document.getElementById('step' + n).style.display = 'flex';
+  document.getElementById('step' + n).style.flexDirection = 'column';
+  document.getElementById('step' + n).style.alignItems = 'center';
+}
+
+function obSetFocus(focus) {
+  settings.focus = focus;
+  document.querySelectorAll('[id^="ob-focus-"]').forEach(el => el.classList.remove('ob-selected'));
+  document.getElementById('ob-focus-' + focus).classList.add('ob-selected');
+  const btn = document.getElementById('step2btn');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  obFocusSelected = true;
+}
+
+function obSetFreq(freq) {
+  settings.freq = freq;
+  document.querySelectorAll('[id^="ob-freq-"]').forEach(el => {
+    el.classList.remove('ob-selected');
+    el.querySelector('.ob-opt-title').textContent = el.querySelector('.ob-opt-title').textContent.replace(' ✓', '');
+  });
+  const selected = document.getElementById('ob-freq-' + freq);
+  selected.classList.add('ob-selected');
+  selected.querySelector('.ob-opt-title').textContent += ' ✓';
 }
 
 function moveNow() {
@@ -653,6 +824,10 @@ document.addEventListener('click', (e) => {
   const dd = document.getElementById('settingsDropdown');
   const btn = e.target.closest('.settings-btn');
   if (!btn && !e.target.closest('.settings-dropdown')) dd.classList.remove('open');
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeOverlay();
 });
 
 function updateUI() {
