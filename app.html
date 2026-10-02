@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UpUp10 — Running</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #050805;
+      --green: #00ff88;
+      --grad: linear-gradient(135deg, #00ffcc 0%, #00ff88 50%, #00cc44 100%);
+      --card-bg: linear-gradient(135deg, #050e05 0%, #0a1a0a 50%, #1a2e1a 100%);
+      --border: rgba(0,255,136,0.25);
+      --w60: rgba(255,255,255,0.60);
+      --w35: rgba(255,255,255,0.35);
+    }
+
+    body {
+      background: var(--black);
+      color: white;
+      font-family: 'Inter', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── ONBOARDING ── */
+    #onboarding {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #onboarding::before {
+      content: '';
+      position: absolute;
+      top: -150px; left: -150px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #onboarding::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; right: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,255,136,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .ob-logo { font-size: 48px; font-weight: 900; color: var(--green); letter-spacing: -1px; margin-bottom: 8px; }
+    .ob-sub { font-size: 13px; color: var(--w35); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 48px; }
+    .ob-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+    .ob-desc { font-size: 17px; color: var(--w60); line-height: 1.7; max-width: 480px; margin: 0 auto 40px; }
+    .ob-points { display: flex; flex-direction: column; gap: 12px; margin-bottom: 48px; text-align: left; max-width: 360px; }
+    .ob-point { font-size: 16px; color: rgba(255,255,255,0.8); display: flex; align-items: center; gap: 10px; }
+    .ob-point::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .ob-btn {
+      background: var(--grad);
+      color: #000; border: none; border-radius: 14px;
+      font-size: 18px; font-weight: 900;
+      padding: 20px 56px; cursor: pointer;
+      font-family: inherit;
+      position: relative; overflow: hidden;
+      transition: opacity .15s, transform .1s;
+    }
+    .ob-btn::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 50%;
+      background: rgba(255,255,255,0.15);
+      border-radius: 14px 14px 0 0;
+    }
+    .ob-btn:hover { opacity: .88; transform: translateY(-1px); }
+    .ob-note { font-size: 13px; color: var(--w35); margin-top: 12px; }
+
+    /* ── MAIN APP ── */
+    #app { display: none; min-height: 100vh; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(5,8,5,0.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo { font-size: 22px; font-weight: 900; color: var(--green); letter-spacing: -0.5px; text-decoration: none; }
+    .nav-status {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--w60);
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(0,255,136,0.8); }
+    .status-dot.paused { background: #ff9500; box-shadow: 0 0 8px rgba(255,149,0,0.8); }
+    .nav-right { display: flex; gap: 12px; align-items: center; }
+
+    /* SETTINGS PANEL */
+    .settings-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white; border-radius: 8px;
+      font-size: 13px; font-weight: 600;
+      padding: 8px 16px; cursor: pointer;
+      font-family: inherit;
+      transition: background .15s;
+    }
+    .settings-btn:hover { background: rgba(255,255,255,0.1); }
+    .move-now-btn {
+      background: var(--grad);
+      border: none; color: #000; border-radius: 8px;
+      font-size: 13px; font-weight: 900;
+      padding: 8px 16px; cursor: pointer;
+      font-family: inherit;
+      transition: opacity .15s;
+    }
+    .move-now-btn:hover { opacity: .88; }
+
+    /* SETTINGS DROPDOWN */
+    .settings-dropdown {
+      position: fixed; top: 60px; right: 24px; z-index: 200;
+      background: linear-gradient(135deg, #0a1a0a, #080e08, #0a0d12);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 8px 0;
+      min-width: 240px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      display: none;
+      overflow: hidden;
+    }
+    .settings-dropdown.open { display: block; }
+
+    /* Diagonal streaks on dropdown */
+    .settings-dropdown::before {
+      content: '';
+      position: absolute; top: 20%; left: -10%;
+      width: 130%; height: 1.5px;
+      background: rgba(150,255,200,0.3);
+      transform: rotate(0deg);
+      pointer-events: none;
+    }
+    .settings-dropdown::after {
+      content: '';
+      position: absolute; top: 55%; left: -5%;
+      width: 130%; height: 1.5px;
+      background: rgba(150,255,200,0.15);
+      transform: rotate(-45deg);
+      pointer-events: none;
+    }
+
+    .dd-section { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .dd-section:last-child { border-bottom: none; }
+    .dd-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: rgba(0,255,136,0.5); text-transform: uppercase; padding: 6px 18px 2px; }
+    .dd-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 18px; font-size: 14px; color: var(--w60);
+      cursor: pointer; transition: background .1s;
+      position: relative;
+    }
+    .dd-item:hover { background: rgba(255,255,255,0.04); color: white; }
+    .dd-item.active { color: white; }
+    .dd-item.active::before { content: '✓'; color: var(--green); margin-right: 8px; font-size: 13px; }
+    .dd-item:not(.active)::before { content: ''; margin-right: 21px; }
+    .dd-item.danger { color: #ff9500; }
+    .dd-item.danger:hover { background: rgba(255,149,0,0.05); }
+
+    /* MAIN CONTENT */
+    .app-content {
+      padding: 100px 32px 48px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .app-running-card {
+      background: linear-gradient(135deg, #050e05 0%, #0a1a0a 50%, #1a2e1a 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    /* Three streaks on running card */
+    .app-running-card::before,
+    .app-running-card::after {
+      content: '';
+      position: absolute;
+      width: 140%; height: 1.5px;
+      background: rgba(150,255,200,0.25);
+      left: -10%;
+    }
+    .app-running-card::before { top: 25%; transform: rotate(0deg); }
+    .app-running-card::after { top: 60%; transform: rotate(-45deg); opacity: 0.15; }
+
+    .streak-third {
+      position: absolute; top: 78%; left: -10%;
+      width: 140%; height: 1.5px;
+      background: rgba(150,255,200,0.1);
+      transform: rotate(-8deg);
+      pointer-events: none;
+    }
+
+    .running-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: rgba(0,255,136,0.6); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .running-title { font-size: clamp(24px, 3vw, 36px); font-weight: 900; margin-bottom: 12px; }
+    .running-sub { font-size: 16px; color: var(--w60); line-height: 1.6; }
+    .running-sub strong { color: white; }
+    .next-label { font-size: 13px; color: var(--w35); margin-top: 24px; }
+
+    .app-tip {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 20px 24px;
+      font-size: 14px; color: var(--w35); line-height: 1.6;
+      text-align: left;
+    }
+    .app-tip strong { color: var(--w60); }
+
+    /* ── OVERLAY ── */
+    #overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: linear-gradient(135deg, #050e05 0%, #080e08 50%, #1a2e1a 100%);
+      align-items: center; justify-content: center;
+      flex-direction: column;
+      padding: 48px;
+      overflow: hidden;
+    }
+    #overlay.show { display: flex; }
+
+    /* Overlay streaks */
+    .ov-streak { position: absolute; width: 140%; height: 2px; background: rgba(150,255,200,0.25); left: -10%; }
+    .ov-s1 { top: 20%; transform: rotate(0deg); opacity: 0.35; }
+    .ov-s2 { top: 50%; transform: rotate(-45deg); opacity: 0.2; }
+    .ov-s3 { top: 75%; transform: rotate(-8deg); opacity: 0.12; }
+
+    /* Overlay glow above middle streak */
+    .ov-glow {
+      position: absolute; top: 35%; left: -10%;
+      width: 140%; height: 80px;
+      background: rgba(0,255,136,0.03);
+      transform: rotate(-45deg);
+      pointer-events: none;
+    }
+
+    .ov-content { position: relative; z-index: 1; max-width: 700px; width: 100%; }
+    .ov-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+    .ov-logo { font-size: 16px; font-weight: 700; color: rgba(0,255,136,0.7); letter-spacing: 3px; text-transform: uppercase; }
+    .ov-badge { background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.25); border-radius: 20px; padding: 5px 14px; font-size: 11px; font-weight: 700; color: var(--green); letter-spacing: 2px; text-transform: uppercase; }
+    .ov-name { font-size: clamp(48px, 8vw, 100px); font-weight: 900; color: white; letter-spacing: -2px; line-height: 1; margin-bottom: 20px; text-transform: uppercase; }
+    .ov-divider { height: 1px; background: linear-gradient(90deg, rgba(0,255,136,0.4), transparent); margin-bottom: 28px; }
+    .ov-instruction { font-size: clamp(18px, 2.5vw, 26px); color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 48px; font-weight: 400; }
+    .ov-bottom { display: flex; align-items: center; gap: 32px; }
+    .ov-countdown { font-size: clamp(80px, 12vw, 130px); font-weight: 900; color: var(--green); line-height: 1; }
+    .ov-track-wrap { flex: 1; }
+    .ov-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
+    .ov-fill { height: 100%; background: linear-gradient(90deg, var(--green), #00ffcc); border-radius: 2px; transition: width 1s linear; }
+    .ov-secs { font-size: 12px; color: var(--w35); letter-spacing: 2px; text-transform: uppercase; }
+    .ov-done {
+      position: absolute; bottom: 40px; right: 40px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+      border-radius: 10px; padding: 12px 24px;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; font-family: inherit;
+      transition: background .15s;
+    }
+    .ov-done:hover { background: rgba(255,255,255,0.1); color: white; }
+
+    /* PAUSED STATE */
+    .paused-banner {
+      display: none;
+      background: rgba(255,149,0,0.1);
+      border: 1px solid rgba(255,149,0,0.3);
+      border-radius: 14px; padding: 16px 24px;
+      font-size: 14px; color: #ff9500;
+      text-align: center; margin-bottom: 24px;
+    }
+    .paused-banner.show { display: block; }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .app-content { padding: 90px 20px 40px; }
+      .app-running-card { padding: 32px 24px; }
+      #overlay { padding: 32px 24px; }
+      .ov-done { bottom: 24px; right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ONBOARDING -->
+<div id="onboarding">
+  <div class="ob-logo">UpUp10</div>
+  <div class="ob-sub">Stop your desk wrecking your body</div>
+  <h1 class="ob-title">A 10-second exercise break.<br>Every hour. Automatic.</h1>
+  <p class="ob-desc">UpUp10 interrupts your screen every 30–60 minutes with a quick movement break. 10 seconds. Then it's gone. Your body will thank you.</p>
+  <div class="ob-points">
+    <div class="ob-point">Improve circulation</div>
+    <div class="ob-point">Increase your energy</div>
+    <div class="ob-point">Reduce body pain</div>
+    <div class="ob-point">Works on any computer with a browser</div>
+  </div>
+  <button class="ob-btn" onclick="startOnboarding()">Enable UpUp10 — It's Free</button>
+  <p class="ob-note">Your browser will ask permission to go fullscreen. Click Allow.</p>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <nav>
+    <a href="index.html" class="nav-logo">UpUp10</a>
+    <div class="nav-status">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">Running</span>
+    </div>
+    <div class="nav-right">
+      <button class="move-now-btn" onclick="moveNow()">Move Now</button>
+      <button class="settings-btn" onclick="toggleSettings()">⚙ Settings</button>
+    </div>
+  </nav>
+
+  <!-- Settings Dropdown -->
+  <div class="settings-dropdown" id="settingsDropdown">
+
+    <div class="dd-section">
+      <div class="dd-label">Today's Focus</div>
+      <div class="dd-item" id="focus-fullbody" onclick="setFocus('fullbody')">Full Body</div>
+      <div class="dd-item" id="focus-neck" onclick="setFocus('neck')">Neck</div>
+      <div class="dd-item" id="focus-back" onclick="setFocus('back')">Back</div>
+      <div class="dd-item" id="focus-energy" onclick="setFocus('energy')">Energy</div>
+    </div>
+
+    <div class="dd-section" id="levelSection">
+      <div class="dd-label">Full Body Level</div>
+      <div class="dd-item" id="level-gentle" onclick="setLevel('gentle')">Gentle</div>
+      <div class="dd-item" id="level-active" onclick="setLevel('active')">Active</div>
+      <div class="dd-item" id="level-strong" onclick="setLevel('strong')">Strong</div>
+    </div>
+
+    <div class="dd-section">
+      <div class="dd-label">Frequency</div>
+      <div class="dd-item" id="freq-20" onclick="setFreq('20')">20 min</div>
+      <div class="dd-item" id="freq-30" onclick="setFreq('30')">30 min</div>
+      <div class="dd-item" id="freq-45" onclick="setFreq('45')">45 min</div>
+      <div class="dd-item" id="freq-60" onclick="setFreq('60')">60 min</div>
+    </div>
+
+    <div class="dd-section">
+      <div class="dd-label">In a Meeting</div>
+      <div class="dd-item" onclick="pauseFor(30)">Pause for 30 minutes</div>
+      <div class="dd-item" onclick="pauseFor(60)">Pause for 1 hour</div>
+      <div class="dd-item" onclick="pauseFor(120)">Pause for 2 hours</div>
+      <div class="dd-item" onclick="pauseFor(null)">Pause until I'm back</div>
+      <div class="dd-item" id="resumeItem" onclick="resume()" style="display:none; color:var(--green);">▶ Resume UpUp10</div>
+    </div>
+
+  </div>
+
+  <div class="app-content">
+    <div class="paused-banner" id="pausedBanner">
+      ⏸ UpUp10 is paused — <a href="#" onclick="resume(); return false;" style="color:#ff9500;">Resume</a>
+    </div>
+
+    <div class="app-running-card">
+      <div class="streak-third"></div>
+      <div class="running-label">
+        <div class="status-dot" id="cardDot"></div>
+        <span id="cardStatus">UpUp10 is running</span>
+      </div>
+      <div class="running-title" id="cardTitle">Your body is being looked after.</div>
+      <div class="running-sub" id="cardSub">Exercise break every <strong id="freqDisplay">30 min</strong> · <strong id="focusDisplay">Full Body</strong> · <strong id="levelDisplay">Active</strong></div>
+      <div class="next-label" id="nextLabel">Next break in <span id="countdown">30:00</span></div>
+    </div>
+
+    <div class="app-tip">
+      <strong>Keep this tab open</strong> — UpUp10 runs as long as this tab is active in your browser. Pin it to your browser for best results.
+    </div>
+  </div>
+</div>
+
+<!-- EXERCISE OVERLAY -->
+<div id="overlay">
+  <div class="ov-streak ov-s1"></div>
+  <div class="ov-streak ov-s2"></div>
+  <div class="ov-streak ov-s3"></div>
+  <div class="ov-glow"></div>
+  <div class="ov-content">
+    <div class="ov-header">
+      <div class="ov-logo">UpUp10</div>
+      <div class="ov-badge" id="ovBadge">FULL BODY</div>
+    </div>
+    <div class="ov-name" id="ovName">CHIN TUCKS</div>
+    <div class="ov-divider"></div>
+    <div class="ov-instruction" id="ovInstruction">Sit tall and gently draw your chin straight back — as if making a double chin — hold 5 seconds — repeat</div>
+    <div class="ov-bottom">
+      <div class="ov-countdown" id="ovCountdown">10</div>
+      <div class="ov-track-wrap">
+        <div class="ov-track"><div class="ov-fill" id="ovFill" style="width:100%"></div></div>
+        <div class="ov-secs">Seconds</div>
+      </div>
+    </div>
+  </div>
+  <button class="ov-done" onclick="closeOverlay()">Done ✓</button>
+</div>
+
+<script>
+const exercises = {
+  fullbody: {
+    gentle: [
+      { name: "Neck Side Stretch", instruction: "Let your right ear fall toward your shoulder like it weighs a tonne — hold 4 seconds feeling the stretch — slowly back up — switch sides and repeat" },
+      { name: "Shoulder Rolls", instruction: "Roll both shoulders backward — up toward your ears, back, down toward your back pockets — make the circles as big as you can — keep rolling" },
+      { name: "Chin Tuck", instruction: "Pull your chin straight back — not down, straight back — give yourself a double chin and hold 3 seconds — feel the pull at the base of your skull — release and repeat" },
+      { name: "Seated Torso Rotation", instruction: "Sit tall — turn and look behind you over your right shoulder as far as you can — hold 2 seconds — turn left — keep going right and left" },
+      { name: "Shoulder Blade Squeeze", instruction: "Squeeze your shoulder blades together like you're cracking a walnut between them — hold 3 seconds — release fully — repeat" },
+      { name: "Wrist Circles", instruction: "Stretch both arms out, make fists — draw the biggest circles you can with your wrists — slow and deliberate — 5 one way, then reverse" },
+      { name: "Seated Cat-Cow", instruction: "Hands on knees — arch your back like a proud cat, chest forward, breathe in — round it like a scared cat, chin down, breathe out — keep flowing" },
+      { name: "Chest Opener", instruction: "Clasp hands behind your back — squeeze your shoulder blades together and lift your arms — hold 5 seconds — release and repeat" },
+      { name: "Ankle Circles", instruction: "Lift both feet slightly off the floor — draw the biggest circles you can with your toes — 5 one way, then reverse" },
+      { name: "Seated Figure-4 Stretch", instruction: "Cross your right ankle over your left knee — sit tall and lean forward slightly — feel it deep in your right hip — hold 5 seconds — switch legs" },
+    ],
+    active: [
+      { name: "Calf Raises", instruction: "Stand up straight — rise up onto your tiptoes as high as you can — pause at the top and squeeze — lower like you're trying not to make a sound — repeat" },
+      { name: "Shoulder Rolls", instruction: "Stand tall — roll both shoulders backward — up toward your ears, back, down toward your back pockets — make the circles as big as possible" },
+      { name: "Sit-to-Stand", instruction: "Scoot to the edge of your chair — lean forward until your nose is over your toes — drive through your heels, no hands — lower back down slowly — repeat" },
+      { name: "Torso Rotation", instruction: "Hands on hips, feet planted — rotate and look behind you over your right shoulder as far as you can — then left — keep going right and left" },
+      { name: "Hip Circles", instruction: "Feet wider than your shoulders, hands on hips — draw the biggest slowest circles you can with your hips like a hula hoop — 5 one way, then reverse" },
+      { name: "Overhead Reach", instruction: "Stand tall — reach your right arm as high as possible like you're trying to touch the ceiling — feel your entire right side lengthen — hold 3 seconds — switch arms" },
+      { name: "Chest Opener", instruction: "Open your arms wide like you're about to hug someone — squeeze your shoulder blades hard together — hold 3 seconds — feel your chest open — release and repeat" },
+      { name: "Standing Figure-4", instruction: "Stand on your left leg — cross your right ankle over your left knee — bend your left knee and sit back slightly — hold 4 seconds — switch legs" },
+      { name: "Neck Side Stretch", instruction: "Stand tall — let your right ear drop toward your right shoulder — use your right hand to gently add a little more stretch — hold 4 seconds — switch sides" },
+      { name: "Chin Tuck", instruction: "Stand tall — pull your chin straight back, not down — hold 3 seconds — feel it at the base of your skull — release and repeat" },
+    ],
+    strong: [
+      { name: "Calf Raises", instruction: "Stand tall — rise onto your tiptoes as high as you can — pause and squeeze hard at the top — lower as slowly as possible — the slower you go down, the harder it works — repeat" },
+      { name: "Hip Circles", instruction: "Feet wide apart, hands on hips — draw the biggest slowest circles you can with your hips — feel everything in your lower back loosen up — 5 one way, then reverse" },
+      { name: "Sit-to-Stand", instruction: "Scoot to the edge of your chair — lean forward, nose over toes — explode up driving through your heels, no hands — lower back down slowly — keep going without stopping" },
+      { name: "Wall Push Up", instruction: "Stand facing a wall — place hands at shoulder height and width — keeping your body straight like a plank, lower your chest to the wall — push back explosively — repeat" },
+      { name: "Standing Knee Lift", instruction: "Stand tall — drive your right knee up toward your chest as high as it'll go — lower it — immediately drive your left knee up — alternate legs, keep the pace up" },
+      { name: "Reverse Lunge", instruction: "Stand tall — step your right foot back and lower your right knee toward the floor — your left shin stays upright — drive back up through your left heel — switch legs" },
+      { name: "Overhead Reach", instruction: "Stand tall — lock both arms straight and reach as high overhead as possible — hold the stretch — breathe deeply — feel every part of your spine lengthen" },
+      { name: "Squat", instruction: "Feet shoulder width apart, toes slightly out — sit back like there's a chair behind you, weight in your heels, chest up — lower until thighs are parallel — drive back up — repeat" },
+      { name: "Side Leg Raise", instruction: "Hold your desk for balance — stand tall — lift your right leg directly out to the side, toe pointing forward — squeeze at the top — lower slowly — 5 reps each side" },
+      { name: "Standing Side Stretch", instruction: "Stand tall — raise your right arm overhead — lean your whole body to the left as far as you can — reach your fingertips toward the wall — hold 4 seconds — switch sides" },
+    ],
+  },
+  neck: [
+    { name: "Chin Tucks", instruction: "Sit tall and gently draw your chin straight back — as if making a double chin — without tipping your head down — hold 5 seconds — release and repeat" },
+    { name: "Neck Side Bend", instruction: "Tilt your ear toward your shoulder — keep your shoulders relaxed and level — hold 20 seconds — slowly return to centre — switch sides and repeat" },
+    { name: "Neck Rotation", instruction: "Slowly turn your head to look over one shoulder — hold 5 seconds — return to centre — switch sides — keep the movement slow and controlled" },
+    { name: "Upper Trapezius Stretch", instruction: "Sit on your right hand — tilt your head left and slightly forward — feel the stretch along the right side of your neck — hold 20 seconds — switch sides" },
+    { name: "Shoulder Rolls", instruction: "Roll your shoulders up, back, and down in slow circles — 10 times forward — then 10 times in reverse — this loosens the muscles that pull on your neck" },
+    { name: "Shoulder Blade Squeeze", instruction: "Draw your shoulder blades back and down as if tucking them into your back pockets — hold 5 seconds — release fully — repeat 10 times" },
+    { name: "Chest Opener", instruction: "Clasp your hands behind your back — gently open your chest and squeeze your shoulder blades — hold 20 seconds" },
+    { name: "Seated Thoracic Extension", instruction: "Hands behind your head — gently lean your upper back over the top of your chair backrest — hold 5 seconds — repeat 5 times" },
+    { name: "Isometric Neck Press", instruction: "Place your palm on your forehead — press your head gently into it without letting it move — hold 5 seconds — repeat on each side of your head" },
+    { name: "Levator Scapulae Stretch", instruction: "Turn your head about 45° to one side — look down toward your armpit — hold 20 seconds each side" },
+  ],
+  back: [
+    { name: "Sit-to-Stand", instruction: "Scoot to the edge of your chair — lean forward until your nose is over your toes — stand up without using your hands — lower back down slowly — repeat 10 times" },
+    { name: "Abdominal Bracing", instruction: "Sitting or standing — gently tighten your stomach as if bracing for a light poke — breathe normally — hold 10 seconds — repeat 10 times" },
+    { name: "Desk Plank", instruction: "Place your hands on the edge of a sturdy desk — walk your feet back until your body is straight — hold 20 seconds — keep your core tight — repeat 3 times" },
+    { name: "Standing Glute Kickback", instruction: "Hold your desk for balance — keep your back still — extend one leg straight behind you squeezing the glute — 10 reps each side" },
+    { name: "Seated Pelvic Tilts", instruction: "Gently rock your pelvis forward — arching slightly — then back — 15 slow reps — this eases stiffness and builds control" },
+    { name: "Seated Hamstring Stretch", instruction: "Straighten one leg with your heel on the floor — hinge forward from your hips with a straight back — hold 30 seconds — switch legs" },
+    { name: "Standing Back Extension", instruction: "Put your hands on your lower back — gently lean backward — feel the front of your body open up — 5 slow reps" },
+    { name: "Hip Flexor Stretch", instruction: "Take a short lunge stance — tuck your pelvis under — feel the stretch at the front of your back hip — hold 30 seconds each side" },
+    { name: "Seated Figure-4 Stretch", instruction: "Cross one ankle over your opposite knee — lean forward slightly — feel it deep in your hip and glute — hold 30 seconds — switch sides" },
+    { name: "Cat-Cow", instruction: "Hands on knees — arch your back like a proud cat, chest forward, breathe in — round it like a scared cat, chin down, breathe out — 10 slow flowing reps" },
+  ],
+  energy: [
+    { name: "Sit-to-Stands", instruction: "Stand up from your chair and sit down 15 times without using your hands — works your largest muscles fast — you don't have to leave your desk" },
+    { name: "Desk Push-Ups", instruction: "Hands on the edge of your desk — do 10 slow push-ups — wake up your chest, arms and shoulders — keep your body straight like a plank" },
+    { name: "Calf Raises", instruction: "Rise onto your toes and lower slowly — 20 reps — your calves pump blood back up from your legs — great if you feel sluggish after long sitting" },
+    { name: "High Knees on the Spot", instruction: "March on the spot driving your knees up — arms swinging — 60 seconds — speed it up for the last 20 seconds to raise your heart rate" },
+    { name: "Star Jumps", instruction: "30 seconds of star jumps — for a quieter version step side to side while raising your arms overhead — gets blood moving fast" },
+    { name: "Shadow Boxing", instruction: "60 seconds of quick punches with a slight bounce on your feet — gives a fast heart-rate and mood lift — surprisingly fun" },
+    { name: "Standing Knee Lift", instruction: "Drive each knee up toward your chest — alternate legs — keep the pace up — pull your tummy in tight — 60 seconds" },
+    { name: "Reach, Breathe and Twist", instruction: "Sweep your arms overhead on a deep breath in — lower on the breath out — then twist gently each way — repeat 5 times" },
+    { name: "Wall Push-Up", instruction: "Hands on wall at shoulder height — lower your chest to the wall — push back explosively — 15 reps — wakes up your upper body fast" },
+    { name: "Reverse Lunge", instruction: "Step one foot back and lower your knee toward the floor — drive back up through your front heel — alternate legs — 10 reps each side" },
+  ],
+};
+
+// State
+let settings = {
+  focus: 'fullbody',
+  level: 'active',
+  freq: 30,
+};
+let exerciseIndex = 0;
+let workTimer = null;
+let countdownTimer = null;
+let pauseTimer = null;
+let isPaused = false;
+let secondsLeft = 0;
+let overlayCountdown = 10;
+let overlayTimer = null;
+
+function getExerciseList() {
+  if (settings.focus === 'fullbody') return exercises.fullbody[settings.level];
+  return exercises[settings.focus];
+}
+
+function getNextExercise() {
+  const list = getExerciseList();
+  const exercise = list[exerciseIndex % list.length];
+  exerciseIndex = (exerciseIndex + 1) % list.length;
+  return exercise;
+}
+
+function saveSettings() {
+  localStorage.setItem('upup10_settings', JSON.stringify(settings));
+  localStorage.setItem('upup10_index', exerciseIndex);
+}
+
+function loadSettings() {
+  const saved = localStorage.getItem('upup10_settings');
+  if (saved) settings = { ...settings, ...JSON.parse(saved) };
+  const idx = localStorage.getItem('upup10_index');
+  if (idx) exerciseIndex = parseInt(idx);
+}
+
+// Check new day — reset index
+function checkDayReset() {
+  const today = new Date().toDateString();
+  const lastDay = localStorage.getItem('upup10_lastday');
+  if (today !== lastDay) {
+    exerciseIndex = 0;
+    localStorage.setItem('upup10_lastday', today);
+  }
+}
+
+function startOnboarding() {
+  document.documentElement.requestFullscreen().catch(() => {});
+  document.getElementById('onboarding').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  localStorage.setItem('upup10_onboarded', 'true');
+  loadSettings();
+  checkDayReset();
+  updateUI();
+  startTimer();
+}
+
+function startTimer() {
+  if (workTimer) clearInterval(workTimer);
+  if (countdownTimer) clearInterval(countdownTimer);
+  secondsLeft = settings.freq * 60;
+  updateCountdown();
+  countdownTimer = setInterval(() => {
+    if (isPaused) return;
+    secondsLeft--;
+    updateCountdown();
+    if (secondsLeft <= 0) {
+      showOverlay();
+      secondsLeft = settings.freq * 60;
+    }
+  }, 1000);
+}
+
+function updateCountdown() {
+  const m = Math.floor(secondsLeft / 60);
+  const s = secondsLeft % 60;
+  document.getElementById('countdown').textContent = `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function showOverlay() {
+  const exercise = getNextExercise();
+  document.getElementById('ovName').textContent = exercise.name.toUpperCase();
+  document.getElementById('ovInstruction').textContent = exercise.instruction;
+  const focusLabels = { fullbody: 'FULL BODY', neck: 'NECK', back: 'BACK', energy: 'ENERGY' };
+  document.getElementById('ovBadge').textContent = focusLabels[settings.focus];
+  document.getElementById('overlay').classList.add('show');
+  document.documentElement.requestFullscreen().catch(() => {});
+  startOverlayCountdown();
+  saveSettings();
+}
+
+function startOverlayCountdown() {
+  if (overlayTimer) clearInterval(overlayTimer);
+  overlayCountdown = 10;
+  document.getElementById('ovCountdown').textContent = overlayCountdown;
+  document.getElementById('ovFill').style.width = '100%';
+  overlayTimer = setInterval(() => {
+    overlayCountdown--;
+    document.getElementById('ovCountdown').textContent = overlayCountdown;
+    document.getElementById('ovFill').style.width = (overlayCountdown / 10 * 100) + '%';
+    if (overlayCountdown <= 0) closeOverlay();
+  }, 1000);
+}
+
+function closeOverlay() {
+  if (overlayTimer) clearInterval(overlayTimer);
+  document.getElementById('overlay').classList.remove('show');
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+}
+
+function moveNow() {
+  toggleSettings(true);
+  showOverlay();
+}
+
+function pauseFor(minutes) {
+  isPaused = true;
+  if (pauseTimer) clearTimeout(pauseTimer);
+  if (minutes) {
+    pauseTimer = setTimeout(() => { isPaused = false; updateUI(); }, minutes * 60 * 1000);
+  }
+  toggleSettings(true);
+  updateUI();
+}
+
+function resume() {
+  isPaused = false;
+  if (pauseTimer) clearTimeout(pauseTimer);
+  toggleSettings(true);
+  updateUI();
+}
+
+function setFocus(focus) {
+  settings.focus = focus;
+  exerciseIndex = 0;
+  saveSettings();
+  updateUI();
+}
+
+function setLevel(level) {
+  settings.level = level;
+  saveSettings();
+  updateUI();
+}
+
+function setFreq(freq) {
+  settings.freq = parseInt(freq);
+  saveSettings();
+  startTimer();
+  updateUI();
+}
+
+function toggleSettings(forceClose) {
+  const dd = document.getElementById('settingsDropdown');
+  if (forceClose) { dd.classList.remove('open'); return; }
+  dd.classList.toggle('open');
+}
+
+document.addEventListener('click', (e) => {
+  const dd = document.getElementById('settingsDropdown');
+  const btn = e.target.closest('.settings-btn');
+  if (!btn && !e.target.closest('.settings-dropdown')) dd.classList.remove('open');
+});
+
+function updateUI() {
+  // Status
+  const dot1 = document.getElementById('statusDot');
+  const dot2 = document.getElementById('cardDot');
+  const statusText = document.getElementById('statusText');
+  const cardStatus = document.getElementById('cardStatus');
+  const pausedBanner = document.getElementById('pausedBanner');
+  const resumeItem = document.getElementById('resumeItem');
+
+  if (isPaused) {
+    dot1.classList.add('paused');
+    dot2.classList.add('paused');
+    statusText.textContent = 'Paused';
+    cardStatus.textContent = 'UpUp10 is paused';
+    pausedBanner.classList.add('show');
+    resumeItem.style.display = 'flex';
+  } else {
+    dot1.classList.remove('paused');
+    dot2.classList.remove('paused');
+    statusText.textContent = 'Running';
+    cardStatus.textContent = 'UpUp10 is running';
+    pausedBanner.classList.remove('show');
+    resumeItem.style.display = 'none';
+  }
+
+  // Focus labels
+  const focusLabels = { fullbody: 'Full Body', neck: 'Neck', back: 'Back', energy: 'Energy' };
+  document.getElementById('focusDisplay').textContent = focusLabels[settings.focus];
+  document.getElementById('freqDisplay').textContent = settings.freq + ' min';
+
+  // Level display
+  const levelEl = document.getElementById('levelDisplay');
+  if (settings.focus === 'fullbody') {
+    const levelLabels = { gentle: 'Gentle', active: 'Active', strong: 'Strong' };
+    levelEl.textContent = levelLabels[settings.level];
+    levelEl.style.display = 'inline';
+    document.getElementById('levelSection').style.display = 'block';
+  } else {
+    levelEl.style.display = 'none';
+    document.getElementById('levelSection').style.display = 'none';
+  }
+
+  // Active states in dropdown
+  ['fullbody','neck','back','energy'].forEach(f => {
+    document.getElementById('focus-' + f).classList.toggle('active', settings.focus === f);
+  });
+  ['gentle','active','strong'].forEach(l => {
+    document.getElementById('level-' + l).classList.toggle('active', settings.level === l);
+  });
+  ['20','30','45','60'].forEach(f => {
+    document.getElementById('freq-' + f).classList.toggle('active', settings.freq === parseInt(f));
+  });
+}
+
+// Init
+window.addEventListener('load', () => {
+  const onboarded = localStorage.getItem('upup10_onboarded');
+  if (onboarded) {
+    document.getElementById('onboarding').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadSettings();
+    checkDayReset();
+    updateUI();
+    startTimer();
+  }
+});
+</script>
+</body>
+</html>
