@@ -337,59 +337,75 @@
 </head>
 <body>
 
-<!-- ONBOARDING - SINGLE SCREEN -->
+<!-- ONBOARDING - 2 SCREENS -->
 <div id="onboarding">
-  <div class="ob-logo">UpUp10</div>
-  <div class="ob-sub">Stop your desk wrecking your body</div>
-  <h1 class="ob-title">10 seconds of movement.<br>Every 20–60 minutes. Automatic.</h1>
-  <p class="ob-desc">UpUp10 interrupts your screen with quick exercise breaks. Your body will thank you.</p>
-  
-  <div style="width:100%; max-width:520px; margin:0 auto 40px;">
-    <h3 style="font-size:14px; font-weight:700; color:rgba(0,255,136,0.7); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">Choose your focus</h3>
-    <div class="ob-options">
-      <div class="ob-option ob-selected" id="ob-focus-fullbody" onclick="obSetFocus('fullbody')">
-        <div class="ob-opt-title">Full Body</div>
-        <div class="ob-opt-desc">General movement for overall health</div>
-      </div>
-      <div class="ob-option" id="ob-focus-neck" onclick="obSetFocus('neck')">
-        <div class="ob-opt-title">Neck</div>
-        <div class="ob-opt-desc">Screen-related neck tension</div>
-      </div>
-      <div class="ob-option" id="ob-focus-back" onclick="obSetFocus('back')">
-        <div class="ob-opt-title">Back</div>
-        <div class="ob-opt-desc">Lower back pain from sitting</div>
-      </div>
-      <div class="ob-option" id="ob-focus-energy" onclick="obSetFocus('energy')">
-        <div class="ob-opt-title">Energy</div>
-        <div class="ob-opt-desc">Intensity boost for afternoon slump</div>
-      </div>
-    </div>
-  </div>
-
-  <div style="width:100%; max-width:520px; margin:0 auto 40px;">
-    <h3 style="font-size:14px; font-weight:700; color:rgba(0,255,136,0.7); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">How often?</h3>
-    <div class="ob-options">
-      <div class="ob-option" id="ob-freq-20" onclick="obSetFreq(20)">
-        <div class="ob-opt-title">Every 20 min</div>
-        <div class="ob-opt-desc">Maximum movement</div>
-      </div>
-      <div class="ob-option ob-selected" id="ob-freq-30" onclick="obSetFreq(30)">
-        <div class="ob-opt-title">Every 30 min ✓</div>
-        <div class="ob-opt-desc">Research-backed</div>
-      </div>
-      <div class="ob-option" id="ob-freq-45" onclick="obSetFreq(45)">
-        <div class="ob-opt-title">Every 45 min</div>
-        <div class="ob-opt-desc">Focused work</div>
-      </div>
-      <div class="ob-option" id="ob-freq-60" onclick="obSetFreq(60)">
-        <div class="ob-opt-title">Every 60 min</div>
-        <div class="ob-opt-desc">One per hour</div>
+  <!-- Screen 1: Welcome + Focus -->
+  <div class="ob-step" id="step1">
+    <div class="ob-logo">UpUp10</div>
+    <div class="ob-sub">Stop your desk wrecking your body</div>
+    <h1 class="ob-title">10 seconds of movement.<br>Every 20–60 minutes. Automatic.</h1>
+    <p class="ob-desc">UpUp10 interrupts your screen with quick exercise breaks. Your body will thank you.</p>
+    
+    <div style="width:100%; max-width:520px; margin:0 auto 40px;">
+      <h3 style="font-size:14px; font-weight:700; color:rgba(0,255,136,0.7); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">What does your body need?</h3>
+      <div class="ob-options">
+        <div class="ob-option ob-selected" id="ob-focus-fullbody" onclick="obSetFocus('fullbody')">
+          <div class="ob-opt-title">Full Body</div>
+          <div class="ob-opt-desc">General movement for overall health</div>
+        </div>
+        <div class="ob-option" id="ob-focus-neck" onclick="obSetFocus('neck')">
+          <div class="ob-opt-title">Neck</div>
+          <div class="ob-opt-desc">Screen-related neck tension</div>
+        </div>
+        <div class="ob-option" id="ob-focus-back" onclick="obSetFocus('back')">
+          <div class="ob-opt-title">Back</div>
+          <div class="ob-opt-desc">Lower back pain from sitting</div>
+        </div>
+        <div class="ob-option" id="ob-focus-energy" onclick="obSetFocus('energy')">
+          <div class="ob-opt-title">Energy</div>
+          <div class="ob-opt-desc">Intensity boost for afternoon slump</div>
+        </div>
       </div>
     </div>
+
+    <button class="ob-btn" onclick="goStep(2)">Next →</button>
   </div>
 
-  <button class="ob-btn" onclick="startOnboarding()">Start UpUp10 →</button>
-  <p class="ob-note" style="margin-top:16px;">Change these settings any time in the Settings menu.</p>
+  <!-- Screen 2: Frequency + Tips -->
+  <div class="ob-step" id="step2" style="display:none;">
+    <div class="ob-logo">UpUp10</div>
+    <div class="ob-step-num">Step 2 of 2</div>
+    <h2 class="ob-title">How often do you want a break?</h2>
+    <p class="ob-desc">Research shows every 30 minutes is the sweet spot — but choose what works for you.</p>
+    
+    <div style="width:100%; max-width:520px; margin:0 auto 40px;">
+      <div class="ob-options">
+        <div class="ob-option" id="ob-freq-20" onclick="obSetFreq(20)">
+          <div class="ob-opt-title">Every 20 min</div>
+          <div class="ob-opt-desc">Maximum movement</div>
+        </div>
+        <div class="ob-option ob-selected" id="ob-freq-30" onclick="obSetFreq(30)">
+          <div class="ob-opt-title">Every 30 min ✓</div>
+          <div class="ob-opt-desc">Research-backed</div>
+        </div>
+        <div class="ob-option" id="ob-freq-45" onclick="obSetFreq(45)">
+          <div class="ob-opt-title">Every 45 min</div>
+          <div class="ob-opt-desc">Focused work</div>
+        </div>
+        <div class="ob-option" id="ob-freq-60" onclick="obSetFreq(60)">
+          <div class="ob-opt-title">Every 60 min</div>
+          <div class="ob-opt-desc">Minimal interruption</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:100%; max-width:480px; margin:0 auto 32px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:20px 24px; font-size:13px; color:rgba(255,255,255,0.7); line-height:1.6; text-align:left;">
+      <strong style="color:rgba(255,255,255,0.9);">💡 Quick tips:</strong> Change settings any time from the Settings menu. In a meeting? Pause breaks for 30 min, 1 hour, or until you're back.
+    </div>
+
+    <button class="ob-btn" onclick="startOnboarding()">Start UpUp10 →</button>
+    <p class="ob-note">Your browser will ask permission to go fullscreen. Click Allow for the best experience.</p>
+  </div>
 </div>
 
 <!-- MAIN APP -->
@@ -699,7 +715,6 @@ function obSetFocus(focus) {
   settings.focus = focus;
   document.querySelectorAll('[id^="ob-focus-"]').forEach(el => el.classList.remove('ob-selected'));
   document.getElementById('ob-focus-' + focus).classList.add('ob-selected');
-  obFocusSelected = true;
 }
 
 function obSetFreq(freq) {
