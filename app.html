@@ -304,15 +304,16 @@
     .ov-secs { font-size: 12px; color: var(--w35); letter-spacing: 2px; text-transform: uppercase; }
     .ov-done {
       position: absolute; bottom: 40px; right: 40px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(0,255,136,0.3);
+      color: rgba(0,255,136,0.8);
       border-radius: 10px; padding: 12px 24px;
       font-size: 14px; font-weight: 700;
       cursor: pointer; font-family: inherit;
-      transition: background .15s;
+      transition: all .15s;
+      z-index: 1000;
     }
-    .ov-done:hover { background: rgba(255,255,255,0.1); color: white; }
+    .ov-done:hover { background: rgba(255,255,255,0.2); color: var(--green); border-color: rgba(0,255,136,0.6); transform: translateY(-2px); }
 
     /* PAUSED STATE */
     .paused-banner {
@@ -336,116 +337,59 @@
 </head>
 <body>
 
-<!-- ONBOARDING -->
+<!-- ONBOARDING - SINGLE SCREEN -->
 <div id="onboarding">
-  <!-- Step 1: Welcome -->
-  <div class="ob-step" id="step1">
-    <div class="ob-logo">UpUp10</div>
-    <div class="ob-sub">Stop your desk wrecking your body</div>
-    <h1 class="ob-title">10 seconds of movement.<br>Every 20–60 minutes. Automatic.</h1>
-    <p class="ob-desc">UpUp10 interrupts your screen with a quick exercise break. 10 seconds. Then it's gone. Your body will thank you.</p>
-    <div class="ob-points">
-      <div class="ob-point">Improve circulation</div>
-      <div class="ob-point">Increase your energy</div>
-      <div class="ob-point">Reduce body pain</div>
-      <div class="ob-point">Works on Mac, Windows or any work computer</div>
-    </div>
-    <button class="ob-btn" onclick="goStep(2)">Get Started →</button>
-  </div>
-
-  <!-- Step 2: Focus -->
-  <div class="ob-step" id="step2" style="display:none;">
-    <div class="ob-logo">UpUp10</div>
-    <div class="ob-step-num">Step 1 of 3</div>
-    <h2 class="ob-title">What does your body<br>need today?</h2>
-    <p class="ob-desc">Choose your focus — you can change this any time in Settings.</p>
+  <div class="ob-logo">UpUp10</div>
+  <div class="ob-sub">Stop your desk wrecking your body</div>
+  <h1 class="ob-title">10 seconds of movement.<br>Every 20–60 minutes. Automatic.</h1>
+  <p class="ob-desc">UpUp10 interrupts your screen with quick exercise breaks. Your body will thank you.</p>
+  
+  <div style="width:100%; max-width:520px; margin:0 auto 40px;">
+    <h3 style="font-size:14px; font-weight:700; color:rgba(0,255,136,0.7); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">Choose your focus</h3>
     <div class="ob-options">
-      <div class="ob-option" id="ob-focus-fullbody" onclick="obSetFocus('fullbody')">
+      <div class="ob-option ob-selected" id="ob-focus-fullbody" onclick="obSetFocus('fullbody')">
         <div class="ob-opt-title">Full Body</div>
-        <div class="ob-opt-desc">General movement breaks for overall health</div>
+        <div class="ob-opt-desc">General movement for overall health</div>
       </div>
       <div class="ob-option" id="ob-focus-neck" onclick="obSetFocus('neck')">
         <div class="ob-opt-title">Neck</div>
-        <div class="ob-opt-desc">Targeted stretches for screen-related neck tension</div>
+        <div class="ob-opt-desc">Screen-related neck tension</div>
       </div>
       <div class="ob-option" id="ob-focus-back" onclick="obSetFocus('back')">
         <div class="ob-opt-title">Back</div>
-        <div class="ob-opt-desc">Exercises for lower back pain from sitting</div>
+        <div class="ob-opt-desc">Lower back pain from sitting</div>
       </div>
       <div class="ob-option" id="ob-focus-energy" onclick="obSetFocus('energy')">
         <div class="ob-opt-title">Energy</div>
-        <div class="ob-opt-desc">Higher intensity moves to beat the afternoon slump</div>
+        <div class="ob-opt-desc">Intensity boost for afternoon slump</div>
       </div>
     </div>
-    <button class="ob-btn" id="step2btn" onclick="goStep(3)" disabled style="opacity:0.4;">Next →</button>
   </div>
 
-  <!-- Step 3: Frequency -->
-  <div class="ob-step" id="step3" style="display:none;">
-    <div class="ob-logo">UpUp10</div>
-    <div class="ob-step-num">Step 2 of 3</div>
-    <h2 class="ob-title">How often do you want<br>a break?</h2>
-    <p class="ob-desc">Research shows every 30 minutes is the sweet spot — but choose what works for you.</p>
+  <div style="width:100%; max-width:520px; margin:0 auto 40px;">
+    <h3 style="font-size:14px; font-weight:700; color:rgba(0,255,136,0.7); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px;">How often?</h3>
     <div class="ob-options">
       <div class="ob-option" id="ob-freq-20" onclick="obSetFreq(20)">
         <div class="ob-opt-title">Every 20 min</div>
-        <div class="ob-opt-desc">Maximum movement — great for intensive desk days</div>
+        <div class="ob-opt-desc">Maximum movement</div>
       </div>
       <div class="ob-option ob-selected" id="ob-freq-30" onclick="obSetFreq(30)">
         <div class="ob-opt-title">Every 30 min ✓</div>
-        <div class="ob-opt-desc">Research-backed sweet spot — recommended</div>
+        <div class="ob-opt-desc">Research-backed</div>
       </div>
       <div class="ob-option" id="ob-freq-45" onclick="obSetFreq(45)">
         <div class="ob-opt-title">Every 45 min</div>
-        <div class="ob-opt-desc">Good balance for focused work sessions</div>
+        <div class="ob-opt-desc">Focused work</div>
       </div>
       <div class="ob-option" id="ob-freq-60" onclick="obSetFreq(60)">
         <div class="ob-opt-title">Every 60 min</div>
-        <div class="ob-opt-desc">One break per hour — minimal interruption</div>
+        <div class="ob-opt-desc">One per hour</div>
       </div>
     </div>
-    <button class="ob-btn" onclick="goStep(4)">Next →</button>
   </div>
 
-  <!-- Step 4: How to use -->
-  <div class="ob-step" id="step4" style="display:none;">
-    <div class="ob-logo">UpUp10</div>
-    <div class="ob-step-num">Step 3 of 3</div>
-    <h2 class="ob-title">You're almost ready.</h2>
-    <p class="ob-desc">Here's how to get the most out of UpUp10:</p>
-    <div class="ob-how">
-      <div class="ob-how-item">
-        <div class="ob-how-icon">⚙</div>
-        <div>
-          <div class="ob-how-title">Change settings any time</div>
-          <div class="ob-how-desc">Click the Settings button in the top right to change your focus, level, or frequency — or to pause for a meeting.</div>
-        </div>
-      </div>
-      <div class="ob-how-item">
-        <div class="ob-how-icon">⏸</div>
-        <div>
-          <div class="ob-how-title">In a meeting?</div>
-          <div class="ob-how-desc">Go to Settings → In a Meeting to pause breaks for 30 min, 1 hour, 2 hours, or until you're back.</div>
-        </div>
-      </div>
-      <div class="ob-how-item">
-        <div class="ob-how-icon">💚</div>
-        <div>
-          <div class="ob-how-title">Move Now</div>
-          <div class="ob-how-desc">Click Move Now any time to trigger an exercise break immediately — don't wait for the timer.</div>
-        </div>
-      </div>
-      <div class="ob-how-item">
-        <div class="ob-how-icon">🌐</div>
-        <div>
-          <div class="ob-how-title">Keep this tab open</div>
-          <div class="ob-how-desc">UpUp10 runs as long as this browser tab is open. Pin it to your browser bar for best results.</div>
-        </div>
-      </div>
-    </div>
-    <button class="ob-btn" onclick="startOnboarding()">Start UpUp10 →</button>
-    <p class="ob-note">Your browser will ask permission to go fullscreen. Click Allow for the best experience.</p>
-  </div>
+  <button class="ob-btn" onclick="startOnboarding()">Start UpUp10 →</button>
+  <p class="ob-note" style="margin-top:16px;">Change these settings any time in the Settings menu.</p>
 </div>
 
 <!-- MAIN APP -->
@@ -755,9 +699,6 @@ function obSetFocus(focus) {
   settings.focus = focus;
   document.querySelectorAll('[id^="ob-focus-"]').forEach(el => el.classList.remove('ob-selected'));
   document.getElementById('ob-focus-' + focus).classList.add('ob-selected');
-  const btn = document.getElementById('step2btn');
-  btn.disabled = false;
-  btn.style.opacity = '1';
   obFocusSelected = true;
 }
 
