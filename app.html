@@ -644,20 +644,35 @@ function startOnboarding() {
   startTimer();
 }
 
+let targetEndTime = null; // real-world timestamp (ms) the current break is due
+
 function startTimer() {
   if (workTimer) clearInterval(workTimer);
   if (countdownTimer) clearInterval(countdownTimer);
-  secondsLeft = settings.freq * 60;
+  targetEndTime = Date.now() + settings.freq * 60 * 1000;
+  requestNotificationPermission();
+  tickCountdown();
+  // Interval just triggers a recheck — actual remaining time always comes
+  // from targetEndTime vs Date.now(), so throttled/delayed ticks in a
+  // background tab can never cause drift: the moment this DOES run (even
+  // late, even after you switch back to the tab), it catches up instantly.
+  countdownTimer = setInterval(tickCountdown, 1000);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+}
+
+function onVisibilityChange() {
+  if (!document.hidden) tickCountdown(); // recompute immediately on return to tab
+}
+
+function tickCountdown() {
+  if (isPaused || !targetEndTime) return;
+  const msLeft = targetEndTime - Date.now();
+  secondsLeft = Math.max(0, Math.round(msLeft / 1000));
   updateCountdown();
-  countdownTimer = setInterval(() => {
-    if (isPaused) return;
-    secondsLeft--;
-    updateCountdown();
-    if (secondsLeft <= 0) {
-      showOverlay();
-      secondsLeft = settings.freq * 60;
-    }
-  }, 1000);
+  if (msLeft <= 0) {
+    showOverlay();
+    targetEndTime = Date.now() + settings.freq * 60 * 1000;
+  }
 }
 
 function updateCountdown() {
@@ -666,8 +681,22 @@ function updateCountdown() {
   document.getElementById('countdown').textContent = `${m}:${s.toString().padStart(2, '0')}`;
 }
 
+function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+function notifyIfHidden(exercise) {
+  if (document.hidden && 'Notification' in window && Notification.permission === 'granted') {
+    const n = new Notification('💚 ' + exercise.name.toUpperCase(), { body: exercise.instruction });
+    n.onclick = () => { window.focus(); n.close(); };
+  }
+}
+
 function showOverlay() {
   const exercise = getNextExercise();
+  notifyIfHidden(exercise);
   document.getElementById('ovName').textContent = exercise.name.toUpperCase();
   document.getElementById('ovInstruction').textContent = exercise.instruction;
   const focusLabels = { fullbody: 'FULL BODY', neck: 'NECK', back: 'BACK', energy: 'ENERGY' };
