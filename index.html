@@ -263,6 +263,19 @@
     .final-head { font-size: clamp(40px, 6.5vw, 80px); font-weight: 900; letter-spacing: -3px; line-height: .95; margin-bottom: 24px; text-transform: uppercase; }
     .final-sub { font-size: 17px; color: var(--w60); margin-bottom: 40px; line-height: 1.6; }
 
+    /* WAITLIST */
+    .waitlist-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px 28px; width: 100%; max-width: 340px; text-align: center; }
+    .waitlist-icon { font-size: 36px; margin-bottom: 12px; }
+    .waitlist-title { font-size: 22px; font-weight: 900; color: white; margin-bottom: 8px; }
+    .waitlist-sub { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.5; margin-bottom: 24px; }
+    .waitlist-form { display: flex; flex-direction: column; gap: 10px; }
+    .waitlist-input { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 14px 16px; font-size: 15px; color: white; font-family: inherit; outline: none; transition: border-color .15s; }
+    .waitlist-input:focus { border-color: rgba(0,255,136,0.4); }
+    .waitlist-input::placeholder { color: rgba(255,255,255,0.25); }
+    .waitlist-btn { background: var(--green); color: #000; border: none; border-radius: 10px; padding: 14px 20px; font-size: 15px; font-weight: 900; cursor: pointer; font-family: inherit; transition: opacity .15s; }
+    .waitlist-btn:hover { opacity: 0.85; }
+    .waitlist-thanks { padding: 8px 0; line-height: 1.8; }
+
     /* FOOTER */
     footer { padding: 32px 48px; border-top: 1px solid var(--w10); display: flex; justify-content: space-between; align-items: center; color: var(--w35); font-size: 13px; }
     .footer-logo { font-size: 18px; font-weight: 900; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -439,6 +452,80 @@
     </div>
   </div>
 
+  <!-- WAITLIST -->
+  <div class="section" style="text-align:center;">
+    <div class="sec-label reveal">Coming Soon</div>
+    <h2 class="sec-head center reveal">iPhone + Windows versions in development.</h2>
+    <p style="color:rgba(255,255,255,0.5); font-size:17px; margin-bottom:48px; line-height:1.7;" class="reveal">Be first to know when they launch. No spam — just one email when it's ready.</p>
+    <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; max-width:800px; margin:0 auto;" class="reveal">
+
+      <!-- iPhone waitlist -->
+      <div style="flex:1; min-width:280px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:32px; text-align:left;">
+        <div style="font-size:32px; margin-bottom:12px;">📱</div>
+        <h3 style="font-size:20px; font-weight:900; color:white; margin-bottom:8px;">iPhone</h3>
+        <p style="font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:24px; line-height:1.6;">Movement breaks with notifications that interrupt you while you scroll.</p>
+        <div style="display:flex; gap:8px;">
+          <input type="email" id="iphone-email" placeholder="your@email.com" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:12px 16px; color:white; font-size:14px; font-family:inherit; outline:none;" />
+          <button onclick="submitWaitlist('iphone')" style="background:var(--green); color:#000; border:none; border-radius:10px; padding:12px 20px; font-size:14px; font-weight:900; cursor:pointer; font-family:inherit; white-space:nowrap;">Notify Me</button>
+        </div>
+        <p id="iphone-msg" style="font-size:13px; color:var(--green); margin-top:10px; display:none;">✓ You're on the list!</p>
+      </div>
+
+      <!-- Windows waitlist -->
+      <div style="flex:1; min-width:280px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:32px; text-align:left;">
+        <div style="font-size:32px; margin-bottom:12px;">🪟</div>
+        <h3 style="font-size:20px; font-weight:900; color:white; margin-bottom:8px;">Windows</h3>
+        <p style="font-size:14px; color:rgba(255,255,255,0.5); margin-bottom:24px; line-height:1.6;">Full screen takeover — exactly like Mac. We build it when demand is there.</p>
+        <div style="display:flex; gap:8px;">
+          <input type="email" id="windows-email" placeholder="your@email.com" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:12px 16px; color:white; font-size:14px; font-family:inherit; outline:none;" />
+          <button onclick="submitWaitlist('windows')" style="background:var(--green); color:#000; border:none; border-radius:10px; padding:12px 20px; font-size:14px; font-weight:900; cursor:pointer; font-family:inherit; white-space:nowrap;">Notify Me</button>
+        </div>
+        <p id="windows-msg" style="font-size:13px; color:var(--green); margin-top:10px; display:none;">✓ You're on the list!</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WAITLIST -->
+  <div class="section" style="text-align:center;">
+    <div class="sec-label reveal">Coming Soon</div>
+    <h2 class="sec-head center reveal">iPhone &amp; Windows versions in the works.</h2>
+    <p class="sec-sub center reveal" style="max-width:520px;margin:0 auto 48px;">Join the waitlist and be first to know when they launch.</p>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;">
+
+      <!-- iPhone waitlist -->
+      <div class="waitlist-card reveal">
+        <div class="waitlist-icon">📱</div>
+        <div class="waitlist-title">iPhone</div>
+        <div class="waitlist-sub">Movement breaks on your phone — get notified at launch</div>
+        <div class="waitlist-form" id="form-iphone">
+          <input type="email" class="waitlist-input" id="email-iphone" placeholder="your@email.com" />
+          <button class="waitlist-btn" onclick="submitWaitlist('iphone')">Notify Me →</button>
+        </div>
+        <div class="waitlist-thanks" id="thanks-iphone" style="display:none;">
+          <span style="color:var(--green);font-weight:700;">✓ You're on the list!</span><br>
+          <span style="color:rgba(255,255,255,0.4);font-size:13px;">We'll email you when iPhone launches.</span>
+        </div>
+      </div>
+
+      <!-- Windows waitlist -->
+      <div class="waitlist-card reveal">
+        <div class="waitlist-icon">🪟</div>
+        <div class="waitlist-title">Windows</div>
+        <div class="waitlist-sub">Free for the first 100 — same as Mac</div>
+        <div class="waitlist-form" id="form-windows">
+          <input type="email" class="waitlist-input" id="email-windows" placeholder="your@email.com" />
+          <button class="waitlist-btn" onclick="submitWaitlist('windows')">Notify Me →</button>
+        </div>
+        <div class="waitlist-thanks" id="thanks-windows" style="display:none;">
+          <span style="color:var(--green);font-weight:700;">✓ You're on the list!</span><br>
+          <span style="color:rgba(255,255,255,0.4);font-size:13px;">We'll email you when Windows launches.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- FINAL CTA -->
   <div class="bg-green"><section class="final">
     <h2 class="final-head reveal">
@@ -457,6 +544,35 @@
     <div class="footer-logo"><img src="logo.png" alt="UpUp10" style="height:36px;width:auto;"></div>
     <div>© 2026 UpUp10. Made in Sydney.</div>
   </footer>
+
+  <script>
+    const WAITLIST_URL = 'https://script.google.com/macros/s/AKfycbxEZXXEPooqyXz6fPNC8hk6GmxTcMgD_wMhVhzEVhUDySySgXNKmGuat31zxRpqwnaW/exec';
+
+    async function submitWaitlist(platform) {
+      const input = document.getElementById('email-' + platform);
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) {
+        input.style.borderColor = 'rgba(255,80,80,0.6)';
+        input.placeholder = 'Please enter a valid email';
+        setTimeout(() => { input.style.borderColor = ''; input.placeholder = 'your@email.com'; }, 2000);
+        return;
+      }
+      const btn = document.querySelector('#form-' + platform + ' .waitlist-btn');
+      btn.innerHTML = '⏳ Saving…';
+      btn.style.opacity = '0.7';
+      try {
+        await fetch(WAITLIST_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, platform }),
+        });
+      } catch(e) {}
+      // Show thanks regardless (no-cors means we can't read the response)
+      document.getElementById('form-' + platform).style.display = 'none';
+      document.getElementById('thanks-' + platform).style.display = 'block';
+    }
+  </script>
 
   <script>
     // FOUNDING MEMBER DOWNLOADS LEFT
