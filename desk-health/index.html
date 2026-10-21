@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desk Health — Research-Backed Reads for People Who Sit Too Much</title>
+<meta name="description" content="Science-backed articles on what prolonged sitting does to your body — and simple movement habits that actually help. From the team behind UpUp10.">
+<link rel="canonical" href="https://upup10.com/desk-health/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+  :root {
+    --bg:        #050805;
+    --card-from: #050e05;
+    --card-to:   #1a2e1a;
+    --green:     #00ff88;
+    --green-mid: #00ff88;
+    --green-end: #00cc44;
+    --btn-from:  #00ffcc;
+    --btn-mid:   #00ff88;
+    --btn-end:   #00cc44;
+    --text:      #ffffff;
+    --text-mid:  #ccddcc;
+    --text-soft: #7a9a7a;
+    --max:       720px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* DIAGONAL STREAKS */
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::before {
+    top: -200px; left: -100px;
+    width: 600px; height: 600px;
+    background: linear-gradient(0deg, transparent, rgba(0,255,136,0.04));
+    transform: rotate(-8deg);
+  }
+
+  body::after {
+    bottom: -200px; right: -100px;
+    width: 500px; height: 500px;
+    background: linear-gradient(-45deg, transparent, rgba(0,255,136,0.03));
+  }
+
+  /* NAV */
+  nav {
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid rgba(0,255,136,0.15);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+
+  .nav-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-back {
+    font-size: 14px;
+    color: var(--text-soft);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-back:hover { color: var(--green); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 64px 24px 48px;
+    border-bottom: 1px solid rgba(0,255,136,0.12);
+  }
+
+  .hero-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-mid);
+    max-width: 540px;
+    margin-bottom: 28px;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--btn-from), var(--btn-mid), var(--btn-end));
+    color: #050805;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 13px 26px;
+    border-radius: 10px;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    transition: opacity 0.15s;
+  }
+
+  .hero-cta:hover { opacity: 0.88; }
+
+  /* ARTICLES */
+  .articles {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 24px;
+  }
+
+  /* CARD with gradient border */
+  .article-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    border-radius: 14px;
+    padding: 2px; /* border thickness */
+    margin-bottom: 18px;
+    background: linear-gradient(135deg, rgba(0,255,136,0.5), rgba(0,204,68,0.15));
+    transition: background 0.2s;
+  }
+
+  .article-card:hover {
+    background: linear-gradient(135deg, rgba(0,255,136,0.9), rgba(0,204,68,0.4));
+  }
+
+  .card-inner {
+    background: linear-gradient(135deg, var(--card-from), var(--card-to));
+    border-radius: 12px;
+    padding: 24px 26px;
+  }
+
+  .article-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .article-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .article-card p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+
+  .article-arrow {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #060f06, #0f1f0f);
+    border-top: 1px solid rgba(0,255,136,0.15);
+    border-bottom: 1px solid rgba(0,255,136,0.15);
+    padding: 48px 24px;
+    text-align: center;
+  }
+
+  .about-strip-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+
+  .about-strip h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .about-strip p {
+    font-size: 15px;
+    color: var(--text-mid);
+    margin-bottom: 24px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-strip a {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--btn-from), var(--btn-mid), var(--btn-end));
+    color: #050805;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 13px 26px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+
+  .about-strip a:hover { opacity: 0.88; }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 24px;
+    font-size: 13px;
+    color: var(--text-soft);
+  }
+
+  footer a { color: var(--text-soft); text-decoration: none; }
+  footer a:hover { color: var(--green); }
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://upup10.com">UpUp10</a>
+  <a class="nav-back" href="https://upup10.com">← Back to app</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-label">Desk Health</div>
+  <h1>What sitting all day actually does to your body</h1>
+  <p>Research-backed articles on the real cost of a sedentary desk life — and the small movement habits that make a genuine difference.</p>
+  <a class="hero-cta" href="https://upup10.com/download.html">Get UpUp10 free for Mac →</a>
+</header>
+
+<main class="articles">
+  <div class="section-label">Articles</div>
+
+  <a class="article-card" href="/desk-health/sitting-heart.html">
+    <div class="card-inner">
+      <div class="article-tag">Heart Health</div>
+      <h3>What Sitting Does to Your Heart</h3>
+      <p>The research on prolonged sitting and cardiovascular risk is sharper than most people realise — and the fix is simpler than you'd expect.</p>
+      <span class="article-arrow">Read article →</span>
+    </div>
+  </a>
+
+  <!-- Add new article cards here as you publish them -->
+
+</main>
+
+<div class="about-strip">
+  <div class="about-strip-inner">
+    <h3>Built by a 4x Olympian who got soft at a desk</h3>
+    <p>UpUp10 is a free Mac app that reminds you to move every 10 minutes — backed by the same discipline that drove 23 world championships.</p>
+    <a href="https://upup10.com/download.html">Download free for Mac →</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 UpUp10 · <a href="https://upup10.com">upup10.com</a></p>
+</footer>
+
+</body>
+</html>
