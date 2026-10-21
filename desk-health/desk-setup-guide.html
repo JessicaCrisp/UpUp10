@@ -1,0 +1,448 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Desk Setup Guide — UpUp10</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --surface: #141414;
+      --surface2: #1c1c1c;
+      --border: rgba(255,255,255,0.08);
+      --text: #ffffff;
+      --text-muted: rgba(255,255,255,0.45);
+      --text-body: rgba(255,255,255,0.75);
+      --green: #00FF66;
+      --green-dim: rgba(0,255,102,0.12);
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--black);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo img { height: 28px; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 12px; }
+    .nav-links a { text-decoration: none; }
+    .nav-link-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-body);
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-link-text:hover { border-color: rgba(255,255,255,0.3); color: white; }
+    .nav-cta {
+      background: var(--green);
+      color: #000 !important;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero {
+      padding: 96px 32px 80px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .hero-label {
+      display: inline-block;
+      border: 1px solid rgba(0,255,102,0.35);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      max-width: 680px;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--green); }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 32px 100px;
+    }
+
+    /* INTRO NOTE */
+    .intro-note {
+      background: var(--green-dim);
+      border: 1px solid rgba(0,255,102,0.2);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 64px;
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+    .intro-note strong { color: var(--green); }
+
+    /* SECTION */
+    .setup-section { margin-bottom: 64px; }
+    .setup-section h2 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .setup-section h2 .icon { font-size: 16px; }
+
+    /* TIP GRID */
+    .tip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+    }
+    .tip-card {
+      background: var(--surface);
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .tip-card:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .tip-card:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .tip-grid:not(:has(.tip-card:nth-child(3))) .tip-card:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+
+    /* Simpler approach for all cards in a grid */
+    .tip-grid .tip-card { border-radius: var(--radius); }
+
+    .tip-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .tip-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .tip-card .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      margin-bottom: 14px;
+    }
+
+    /* CHECKLIST */
+    .checklist-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .checklist-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--text-body);
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-item .box {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid rgba(0,255,102,0.3);
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 64px;
+    }
+
+    /* CTA */
+    .cta-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 40px;
+      text-align: center;
+      margin-top: 64px;
+    }
+    .cta-block h2 {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .cta-block h2 span { color: var(--green); }
+    .cta-block p {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin: 0 auto 28px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--green);
+      color: #000;
+      text-decoration: none;
+      padding: 14px 30px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 15px;
+      transition: opacity 0.15s;
+    }
+    .cta-btn:hover { opacity: 0.85; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--black);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 36px 24px;
+      font-size: 14px;
+    }
+    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: white; }
+    .footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+    .footer-links span { opacity: 0.3; }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; }
+      .hero { padding: 64px 20px 56px; }
+      .content { padding: 0 20px 72px; }
+      .checklist-card { padding: 20px; }
+      .cta-block { padding: 32px 20px; }
+      .nav-link-text { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html"><img src="https://www.upup10.com/logo.png" alt="UpUp10" style="height:28px"></a>
+    <div class="nav-links">
+      <a href="how-it-works.html" class="nav-link-text">How it works</a>
+      <a href="download.html" class="nav-cta">🍎 Download Mac</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-label">Your body will thank you</div>
+    <h1>Set Up Your Desk<br>to <span>Stop the Damage.</span></h1>
+    <p>Small adjustments to your workspace make a big difference to your neck, back, and energy. Here's what actually matters.</p>
+  </header>
+
+  <main class="content">
+
+    <div class="intro-note">
+      <strong>The honest truth:</strong> most desk pain isn't from working too hard — it's from holding the same position for too long. Even a perfect ergonomic setup becomes harmful if you never move. These tips work best alongside regular movement breaks.
+    </div>
+
+    <!-- MONITOR -->
+    <section class="setup-section">
+      <h2><span class="icon">🖥️</span> Monitor Height &amp; Distance</h2>
+      <div class="tip-grid">
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Eyes at the top third of the screen</h3>
+          <p>The top of your monitor should sit at or just below eye level — never above it. Looking up even slightly strains the neck muscles that support your head all day.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Arm's length away</h3>
+          <p>Position the screen about 50–70cm from your eyes. If you're squinting to read, increase the text size — don't lean in.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Laptop? Add a stand</h3>
+          <p>Laptop screens are always too low. A riser plus an external keyboard is one of the best investments you can make for your neck.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Tilt the screen slightly back</h3>
+          <p>A slight backward tilt (10–20°) reduces glare and keeps your head in a more neutral position throughout the day.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHAIR -->
+    <section class="setup-section">
+      <h2><span class="icon">🪑</span> Chair &amp; Sitting Position</h2>
+      <div class="tip-grid">
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Hips slightly higher than knees</h3>
+          <p>This tilts your pelvis forward and naturally lengthens your spine — unlike sitting with knees at 90°, which tends to slump the lower back.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Feet flat on the floor</h3>
+          <p>If your feet dangle, use a footrest. Dangling feet put pressure on the underside of your thighs and cut off circulation over time.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Lower back supported</h3>
+          <p>Lumbar support should sit in the small of your back, not mid-back. If your chair lacks it, a small rolled towel works just as well.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Sit close to your desk</h3>
+          <p>Reaching forward is one of the main causes of upper back pain. Sit close enough that your elbows are at desk height without stretching.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- KEYBOARD -->
+    <section class="setup-section">
+      <h2><span class="icon">⌨️</span> Keyboard &amp; Mouse</h2>
+      <div class="tip-grid">
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Elbows at 90° or slightly open</h3>
+          <p>Forearms roughly parallel to the floor relaxes the shoulders and prevents tension creeping up the neck. Angled slightly downward is also fine.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Mouse close to the keyboard</h3>
+          <p>Reaching far to the side for a mouse slowly strains your shoulder. Consider a compact keyboard to bring the mouse in closer.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Wrists neutral, not bent up</h3>
+          <p>Your wrists should be flat or slightly downward when typing. Raised wrists compress nerves and are a common cause of tingling in the hands.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- LIGHTING -->
+    <section class="setup-section">
+      <h2><span class="icon">💡</span> Lighting &amp; Glare</h2>
+      <div class="tip-grid">
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Light source to the side, not behind</h3>
+          <p>A window behind you creates glare on your screen. A window behind your monitor means squinting into the light. Position yourself so daylight comes from the side.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Match screen brightness to the room</h3>
+          <p>Your screen shouldn't be brighter than the space around it. Eye fatigue from mismatched brightness contributes to headaches and neck tension.</p>
+        </div>
+        <div class="tip-card">
+          <div class="dot"></div>
+          <h3>Use Night Shift after dark</h3>
+          <p>Warm screen tones in the evening help your body wind down naturally. Find it under macOS System Settings → Displays.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- CHECKLIST -->
+    <section class="setup-section">
+      <h2><span class="icon">📋</span> Quick Setup Checklist</h2>
+      <div class="checklist-card">
+        <h3>Run through this once a week</h3>
+        <div class="check-item"><div class="box"></div><span>Top of monitor at or just below eye level</span></div>
+        <div class="check-item"><div class="box"></div><span>Screen 50–70cm from your eyes</span></div>
+        <div class="check-item"><div class="box"></div><span>Hips slightly higher than knees</span></div>
+        <div class="check-item"><div class="box"></div><span>Feet flat on floor (or on footrest)</span></div>
+        <div class="check-item"><div class="box"></div><span>Lower back supported by chair or cushion</span></div>
+        <div class="check-item"><div class="box"></div><span>Elbows at roughly 90° when typing</span></div>
+        <div class="check-item"><div class="box"></div><span>Mouse within easy reach — no stretching</span></div>
+        <div class="check-item"><div class="box"></div><span>Light source to the side, not behind you</span></div>
+        <div class="check-item"><div class="box"></div><span>Chair close enough that you're not leaning forward</span></div>
+        <div class="check-item"><div class="box"></div><span>Taking movement breaks at least once an hour</span></div>
+      </div>
+    </section>
+
+    <div class="cta-block">
+      <h2>The best ergonomics tip of all:<br><span>keep moving.</span></h2>
+      <p>Even a perfect setup can't undo an hour of stillness. UpUp10 nudges you with a 10-second exercise break every hour — automatic, unobtrusive, and gone before you lose your flow.</p>
+      <a href="download.html" class="cta-btn">🍎 Get UpUp10 Free →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div>© 2026 UpUp10. Made in Sydney.</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <span>·</span>
+      <a href="how-it-works.html">How it works</a>
+      <span>·</span>
+      <a href="desk-setup.html">Desk Setup</a>
+      <span>·</span>
+      <a href="faq.html">FAQ</a>
+      <span>·</span>
+      <a href="bed-exercises.html">Bed Exercises</a>
+      <span>·</span>
+      <a href="download.html">Download</a>
+    </div>
+  </footer>
+
+</body>
+</html>
+
+</body></html>
