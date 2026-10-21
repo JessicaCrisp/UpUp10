@@ -173,6 +173,10 @@
     background: linear-gradient(135deg, rgba(0,255,136,0.9), rgba(0,204,68,0.4));
   }
 
+  .article-card.featured .card-inner {
+    background: linear-gradient(135deg, #071a0f, #0f2a1a);
+  }
+
   .card-inner {
     background: linear-gradient(135deg, var(--card-from), var(--card-to));
     border-radius: 12px;
@@ -269,6 +273,37 @@
 
   footer a { color: var(--text-soft); text-decoration: none; }
   footer a:hover { color: var(--green); }
+
+  /* FAQ */
+  .faq {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(0,255,136,0.1);
+    padding: 24px 0;
+  }
+
+  .faq-item:first-of-type { border-top: 1px solid rgba(0,255,136,0.1); }
+
+  .faq-item h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .faq-item p {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
 </style>
 </head>
 
@@ -287,7 +322,19 @@
 </header>
 
 <main class="articles">
-  <div class="section-label">Articles</div>
+  <!-- FEATURED GUIDE -->
+  <div class="section-label">Guide</div>
+
+  <a class="article-card featured" href="/desk-health/desk-setup-guide.html">
+    <div class="card-inner">
+      <div class="article-tag">⚡ Essential Guide</div>
+      <h3>Set Up Your Desk to Stop the Damage</h3>
+      <p>Small adjustments to your workspace make a big difference to your neck, back, and energy. Here's what actually matters.</p>
+      <span class="article-arrow">Read the guide →</span>
+    </div>
+  </a>
+
+  <div class="section-label" style="margin-top:36px;">Articles</div>
 
   <a class="article-card" href="/desk-health/sitting-heart.html">
     <div class="card-inner">
@@ -301,6 +348,30 @@
   <!-- Add new article cards here as you publish them -->
 
 </main>
+
+<section class="faq" aria-label="Frequently asked questions">
+  <div class="section-label" style="padding-top:0;margin-bottom:0;">Common questions</div>
+
+  <div class="faq-item">
+    <h3>How often should you take breaks from sitting?</h3>
+    <p>Research suggests breaking up sitting every 20–30 minutes is optimal. Even a 1–2 minute movement break — standing, walking, or a few stretches — is enough to interrupt the metabolic effects of prolonged sitting. The key is consistency, not duration.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What does prolonged sitting do to your body?</h3>
+    <p>Sitting for extended periods slows circulation, raises blood sugar, tightens hip flexors, compresses spinal discs, and increases cardiovascular risk. Many of these effects happen independently of how much you exercise — an hour at the gym doesn't fully undo eight hours at a desk.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Can short movement breaks replace going to the gym?</h3>
+    <p>Not entirely — but for desk workers, frequent short breaks may be more protective against sitting-related disease than a single daily workout. The British Journal of Sports Medicine found that regular movement throughout the day has distinct cardiovascular benefits that exercise alone doesn't replicate.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What's the fastest way to fix back pain from sitting?</h3>
+    <p>The most effective immediate relief comes from hip flexor releases and thoracic spine mobility — not posture corrections or expensive chairs. Standing up and moving every 20–30 minutes addresses the root cause better than any ergonomic product.</p>
+  </div>
+</section>
 
 <div class="about-strip">
   <div class="about-strip-inner">
