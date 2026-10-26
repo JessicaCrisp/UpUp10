@@ -558,6 +558,56 @@
     }, { threshold: 0.08 })
     reveals.forEach(el => obs.observe(el))
   </script>
+<script>
+  (function () {
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+    if (!isIOS && !isAndroid) return;
 
+    // Hide all Mac download buttons
+    document.querySelectorAll('a[href*="download.html"]').forEach(el => {
+      el.style.display = 'none';
+    });
+
+    // Build mobile CTA and insert at top of page, after the nav
+    const nav = document.querySelector('nav') || document.body.firstElementChild;
+    const mobileCTA = document.createElement('div');
+    mobileCTA.style.cssText = 'text-align:center; padding:32px 20px 16px;';
+    mobileCTA.innerHTML = `
+      <p style="font-size:1.2rem; margin-bottom:16px; color:white;">
+        📱 <strong>iPhone version coming soon</strong><br>
+        <span style="font-size:0.9rem; opacity:0.6;">Be first to know when it launches.</span>
+      </p>
+      <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+        <input type="email" id="mobile-email" placeholder="your@email.com" required
+          style="flex:1; max-width:220px; padding:10px 14px; border-radius:10px;
+                 background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15);
+                 color:white; font-size:1rem;">
+        <button onclick="mobilNotify()" 
+          style="padding:10px 18px; background:var(--green); color:#000;
+                 border:none; border-radius:10px; font-size:1rem; cursor:pointer; font-weight:700;">
+          Notify Me
+        </button>
+      </div>
+      <p id="mobile-notify-msg" style="display:none; color:var(--green); margin-top:10px; font-size:13px;">
+        ✓ You're on the list!
+      </p>
+    `;
+    nav.insertAdjacentElement('afterend', mobileCTA);
+  })();
+
+  function mobilNotify() {
+    // Copy mobile email into the existing iphone-email input, then reuse submitWaitlist
+    const mobileInput = document.getElementById('mobile-email');
+    const existingInput = document.getElementById('iphone-email');
+    if (existingInput && mobileInput.value) {
+      existingInput.value = mobileInput.value;
+      submitWaitlist('iphone');
+      document.querySelector('[id="mobile-notify-msg"]').style.display = 'block';
+      mobileInput.parentElement.style.display = 'none';
+    }
+  }
+</script>
 </body>
 </html>
